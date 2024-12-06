@@ -1,10 +1,10 @@
 import { NextPage } from "next"
 
-interface AuditorListLoaderProps {
+interface ListLoaderProps {
   items: number;
 }
 
-const AuditorListLoader: NextPage<AuditorListLoaderProps> = ({items}) => {
+const ListLoader: NextPage<ListLoaderProps> = ({items}) => {
   return (
     <div className="flex flex-col mt-5 px-2 w-full gap-2">
     {Array.from({ length: items }, (_, index) => (
@@ -14,4 +14,4 @@ const AuditorListLoader: NextPage<AuditorListLoaderProps> = ({items}) => {
   )
 }
 
-export default AuditorListLoader;
+export default ListLoader;

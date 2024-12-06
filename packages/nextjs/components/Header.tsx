@@ -44,6 +44,17 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <Cog6ToothIcon className="h-4 w-4" />,
   },
   {
+    label: "Config Users",
+    href: "/config-user",
+    icon: <Cog6ToothIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Config Users",
+    href: "/config-user",
+    icon: <Cog6ToothIcon className="h-4 w-4" />,
+  },
+  
+  {
     label: "Debug Contracts",
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
@@ -121,7 +132,7 @@ export const Header = () => {
             <span className="text-xs">???</span>
           </div>
         </Link>
-        <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
+        <ul className="hidden lg:flex lg:flex-1  menu menu-horizontal px-1 gap-2">
           <HeaderMenuLinks />
         </ul>
       </div>

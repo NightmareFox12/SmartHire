@@ -43,7 +43,7 @@ contract TaskContract is AccessControl {
     }
 
     //functions
-    function createUser(address _addressUser) public onlyRole(DEFAULT_ADMIN_ROLE) onlyRole(AUDITOR_ROLE) {
+    function addUser(address _addressUser) public onlyRole(DEFAULT_ADMIN_ROLE) onlyRole(AUDITOR_ROLE) {
       require(_addressUser != address(0), "User address cannot be zero address");
       require(admin != _addressUser, "Admin cannot be user");
 

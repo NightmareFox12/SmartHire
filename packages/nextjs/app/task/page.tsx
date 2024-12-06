@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import CardTaskCollapse from "./_components/CardTaskCollapse";
-import ModalAdminOrAuditor from "./_components/ModalAdminOrAuditor";
+import ModalAdminOrAuditor from "../../components/ModalAdminOrAuditor";
 import TaskListLoader from "./_components/TaskListLoader";
 import { NextPage } from "next";
 import { formatEther } from "viem";

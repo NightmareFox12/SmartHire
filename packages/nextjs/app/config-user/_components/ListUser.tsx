@@ -1,14 +1,14 @@
 "use client";
 
-import AuditorListLoader from "../../../components/ListLoader";
 import { NextPage } from "next";
+import ListLoader from "~~/components/ListLoader";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
-type ListAuditorProps = {
+type ListUserProps = {
   address: string;
 };
 
-const ListAuditor: NextPage<ListAuditorProps> = ({ address }) => {
+const ListUser: NextPage<ListUserProps> = ({ address }) => {
   //contract
   const { data: auditorListData } = useScaffoldReadContract({
     contractName: "TaskContract",
@@ -74,10 +74,10 @@ const ListAuditor: NextPage<ListAuditorProps> = ({ address }) => {
           </tbody>
         </table>
       ) : (
-        <AuditorListLoader items={5} />
+        <ListLoader items={5} />
       )}
     </section>
   );
 };
 
-export default ListAuditor;
+export default ListUser;
