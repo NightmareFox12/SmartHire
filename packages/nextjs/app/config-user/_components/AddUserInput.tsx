@@ -5,7 +5,11 @@ import { NextPage } from "next";
 import { AddressInput } from "~~/components/scaffold-eth";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
-const AddUserInput: NextPage = () => {
+type AddUserInputProps = {
+  address: string;
+};
+
+const AddUserInput: NextPage<AddUserInputProps> = ({ address }) => {
   const [userAddress, setUserAddress] = useState<string>("");
   const [addUserLoading, setAddUserLoading] = useState<boolean>(false);
 
@@ -19,6 +23,7 @@ const AddUserInput: NextPage = () => {
       await writeContractAsync({
         functionName: "addUser",
         args: [userAddress],
+        account: address,
       });
 
       setUserAddress("");
@@ -30,8 +35,8 @@ const AddUserInput: NextPage = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center gap-2 px-4">
-      <AddressInput value={userAddress} onChange={setUserAddress} placeholder="Auditor address" />
+    <section className="flex flex-col justify-center gap-2 px-4 sm:px-12">
+      <AddressInput value={userAddress} onChange={setUserAddress} placeholder="User address" />
 
       <button
         className="btn btn-primary mx-5"

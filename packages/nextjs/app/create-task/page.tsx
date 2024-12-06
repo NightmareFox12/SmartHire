@@ -1,5 +1,6 @@
 "use client";
 
+import FormCreateTask from "./_components/FormCreateTask";
 import { NextPage } from "next";
 import { useAccount } from "wagmi";
 import ModalAdmin from "~~/components/ModalAdmin";
@@ -21,6 +22,7 @@ const CreateTask: NextPage = () => {
       {address !== undefined && adminAddress !== undefined && address === adminAddress && (
         <>
           <h2 className="text-3xl p-2 font-medium text-center">Create Task</h2>
+          <FormCreateTask />
         </>
       )}
     </>

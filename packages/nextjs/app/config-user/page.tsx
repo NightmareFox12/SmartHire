@@ -22,8 +22,8 @@ const ConfigUser: NextPage = () => {
       <ModalAdminOrAuditor/>
       {address !== undefined && adminAddress !== undefined && address === adminAddress && (
         <>
-          <h2 className="text-center text-2xl font-bold p-2">Config Auditors</h2>
-          <AddUserInput />
+          <h2 className="text-center text-2xl font-bold p-2">Config Users</h2>
+          <AddUserInput address={address} />
           <ListUser address={address} />
         </>
       )}

@@ -70,7 +70,7 @@ const FormCreateTask: NextPage = () => {
           <textarea
             value={description}
             onChange={e => setDescription(e.target.value)}
-            className="textarea border-base-300 border-2 bg-base-200 focus:outline-none text-opacity-50 dark:text-opacity-80 focus:border-base-300 placeholder:text-base-300 placeholder:text-[16px] text-base-content opacity-90 font-semibold"
+            className="textarea border-base-300 border-2 bg-base-200 focus:outline-none text-opacity-50 dark:text-opacity-80 focus:border-base-300 placeholder:text-accent placeholder:text-[16px] text-base-content opacity-90 font-semibold"
             placeholder="Description"
           ></textarea>
         </div>

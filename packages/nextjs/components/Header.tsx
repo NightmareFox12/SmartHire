@@ -11,7 +11,7 @@ import {
   Cog6ToothIcon,
   HomeIcon,
   PlusIcon,
-  UserIcon,
+  UserPlusIcon,
 } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
@@ -46,14 +46,9 @@ export const menuLinks: HeaderMenuLink[] = [
   {
     label: "Config Users",
     href: "/config-user",
-    icon: <Cog6ToothIcon className="h-4 w-4" />,
+    icon: <UserPlusIcon className="h-4 w-4" />,
   },
-  {
-    label: "Config Users",
-    href: "/config-user",
-    icon: <Cog6ToothIcon className="h-4 w-4" />,
-  },
-  
+
   {
     label: "Debug Contracts",
     href: "/debug",

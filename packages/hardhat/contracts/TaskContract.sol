@@ -10,7 +10,7 @@ contract TaskContract is AccessControl {
 
     uint256 public taskID = 0;
     uint256 auditorID = 0;
-		uint256 userID = 0;
+    uint256 userID = 0;
     address public admin;
 
     struct Task {
@@ -30,7 +30,7 @@ contract TaskContract is AccessControl {
 
     mapping(uint256 => Task) public tasks;
     mapping(uint256 => Auditor) public auditors;
-		mapping(uint256 => address) public users;
+    mapping(uint256 => address) public users;
 
     //events
     event AuditorAdded(address indexed auditor);
@@ -43,14 +43,15 @@ contract TaskContract is AccessControl {
     }
 
     //functions
-    function addUser(address _addressUser) public onlyRole(DEFAULT_ADMIN_ROLE) onlyRole(AUDITOR_ROLE) {
-      require(_addressUser != address(0), "User address cannot be zero address");
-      require(admin != _addressUser, "Admin cannot be user");
-
-			require(!getAuditorForAddress(_addressUser), "Address is already an auditor");
-			//verificar que el address no este en el auditor
-			users[userID] = _addressUser;
-			userID++;
+    function addUser(address _addressUser) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(_addressUser != address(0), "User address cannot be zero address");
+        require(admin != _addressUser, "Admin cannot be user");
+        require(
+            hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(AUDITOR_ROLE, msg.sender),
+            "Caller is not an admin or auditor"
+        );
+        users[userID] = _addressUser;
+        userID++;
     }
 
     function createTask(string memory _name, string memory _description) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -85,13 +86,7 @@ contract TaskContract is AccessControl {
         return (task.name, task.description);
     }
 
-    function getAllTasks()
-        public
-        view
-        onlyRole(DEFAULT_ADMIN_ROLE)
-        onlyRole(DEFAULT_ADMIN_ROLE)
-        returns (Task[] memory)
-    {
+    function getAllTasks() public view onlyRole(DEFAULT_ADMIN_ROLE) returns (Task[] memory) {
         Task[] memory taskList = new Task[](taskID);
         for (uint256 i = 0; i < taskID; i++) {
             Task storage task = tasks[i];
