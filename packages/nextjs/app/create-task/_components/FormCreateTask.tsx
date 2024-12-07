@@ -5,11 +5,7 @@ import Link from "next/link";
 import { NextPage } from "next";
 import { parseEther } from "viem";
 import { AddressInput, EtherInput, InputBase } from "~~/components/scaffold-eth";
-import {
-  useScaffoldReadContract,
-  useScaffoldWriteContract,
-  useWatchBalance,
-} from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract, useWatchBalance } from "~~/hooks/scaffold-eth";
 
 interface FormCreateTaskProps {
   address: string;

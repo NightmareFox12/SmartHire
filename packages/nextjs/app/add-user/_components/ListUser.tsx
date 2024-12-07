@@ -30,7 +30,7 @@ const ListUser: NextPage<ListUserProps> = ({ address }) => {
           </thead>
           <tbody>
             {auditorListData.map((x, y) => (
-              <tr className={y % 2 == 0 ? "bg-secondary" : "bg-primary"} key={y}>
+              <tr className={y % 2 === 0 ? "bg-secondary" : "bg-primary"} key={y}>
                 <th>{y + 1}</th>
                 <td className="break-all md:break-normal">
                   <Address address={x} format="long" />

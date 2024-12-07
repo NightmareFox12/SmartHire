@@ -162,10 +162,12 @@ contract TaskContract is AccessControl {
         require(tasks[_taskID].responsible == address(0), "Task must have a responsible assigned");
         require(!getAuditorForAddress(msg.sender), "The auditor cannot take on tasks");
 
+        if (!getUserForAddress(msg.sender)) {
+            users[userID] = msg.sender;
+            userID++;
+            emit UserAdded(msg.sender);
+        }
         tasks[_taskID].responsible = payable(msg.sender);
-        users[userID] = msg.sender;
-        userID++;
-        emit UserAdded(msg.sender);
     }
 
     function addAuditor(address _auditorAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
