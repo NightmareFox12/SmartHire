@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NextPage } from "next";
 import { parseEther } from "viem";
-import { getChainId } from "viem/actions";
-import { useAccount, useBalance, useChainId } from "wagmi";
-import { AddressInput, Balance, EtherInput, InputBase } from "~~/components/scaffold-eth";
+import { AddressInput, EtherInput, InputBase } from "~~/components/scaffold-eth";
 import {
   useScaffoldReadContract,
   useScaffoldWriteContract,
@@ -107,7 +105,7 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
               name="task-description"
               value={description}
               onChange={e => setDescription(e.target.value)}
-              className="textarea border-base-300 border-2 bg-base-200 focus:outline-none text-opacity-50 dark:text-opacity-80 focus:border-base-300 placeholder:text-base-content/80 placeholder:text-[16px] text-base-content opacity-90 font-semibold"
+              className="textarea border-base-300 border-2 bg-base-200 focus:outline-none focus:border-base-300 placeholder:text-base-content/80 placeholder:text-[16px] text-base-content font-semibold"
               placeholder="Description"
             ></textarea>
           </div>
