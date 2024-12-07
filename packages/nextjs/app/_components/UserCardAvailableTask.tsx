@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { NextPage } from "next";
 import { formatEther } from "viem";
-import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { useAccount } from "wagmi";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface UserCardAvailableTaskProps {
+  address: string | undefined;
   taskID: bigint;
   name: string;
   description: string;
@@ -15,14 +16,13 @@ interface UserCardAvailableTaskProps {
 }
 
 const UserCardAvailableTask: NextPage<UserCardAvailableTaskProps> = ({
+  address,
   taskID,
   name,
   description,
   reward,
   nativeCurrencyPrice,
 }) => {
-  const {address: address} = useAccount()
-
   const { writeContractAsync: writeTaskContractAsync } = useScaffoldWriteContract("TaskContract");
 
   const [isDollar, setIsDollar] = useState<boolean>(false);
@@ -34,7 +34,7 @@ const UserCardAvailableTask: NextPage<UserCardAvailableTaskProps> = ({
       await writeTaskContractAsync({
         functionName: "acceptTask",
         args: [taskID],
-        account: address
+        account: address,
       });
     } catch (e) {
       console.error("Error setting greeting:", e);
