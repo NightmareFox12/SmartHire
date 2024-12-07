@@ -5,7 +5,6 @@ import CardTaskCollapse from "./_components/CardTaskCollapse";
 import ModalAdminOrAuditor from "../../components/ModalAdminOrAuditor";
 import TaskListLoader from "./_components/TaskListLoader";
 import { NextPage } from "next";
-import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 import ModalMetamask from "~~/components/ModalMetamask";
@@ -23,7 +22,6 @@ interface Ayuda {
 
 const Task: NextPage = () => {
   const { address } = useAccount();
-  const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrency.price);
 
   const [filteredTasks, setFilteredTasks] = useState<Ayuda[] | undefined>(undefined);
 
@@ -118,17 +116,3 @@ const Task: NextPage = () => {
 };
 
 export default Task;
-
-// <div className="collapse bg-base-200 collapse-arrow" key={y}>
-//   <input type="checkbox" />
-//   <div className="collapse-title text-xl font-medium">
-//     TaskID: {y + 1} {x.name}
-//   </div>
-//   <div className="collapse-content">
-//     <p className="break-all">Description: {x.description}</p>
-//     <p>Reward:</p>
-//     <span className="text-[0.8em] font-bold mr-1">$</span>
-//     <span>{(Number(formatEther(x.reward)) * nativeCurrencyPrice).toFixed(2)}</span>
-//     <span>&nbsp;&nbsp;SEGUNDA OPORTUNINDAD{Number(formatEther(x.reward)).toFixed(4)}</span>
-//   </div>
-// </div>
