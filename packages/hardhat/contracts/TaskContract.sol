@@ -98,6 +98,7 @@ contract TaskContract is AccessControl {
         require(bytes(_description).length > 0, "Task description cannot be empty");
         require(msg.value > 0, "A reward must be provided");
         require(admin != _responsible, "Address is admin");
+        require(!getAuditorForAddress(_responsible), "Adress is auditor");
 
         tasks[taskID] = Task(taskID, _name, _description, msg.value, payable(_responsible), false);
 

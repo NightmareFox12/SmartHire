@@ -10,6 +10,7 @@ import {
   ClipboardDocumentIcon,
   Cog6ToothIcon,
   HomeIcon,
+  InformationCircleIcon,
   PlusIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/outline";
@@ -48,7 +49,11 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/config-user",
     icon: <UserPlusIcon className="h-4 w-4" />,
   },
-
+  {
+    label: "Info",
+    href: "/info",
+    icon: <InformationCircleIcon className="h-4 w-4" />,
+  },
   {
     label: "Debug Contracts",
     href: "/debug",
