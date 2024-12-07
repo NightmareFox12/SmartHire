@@ -46,11 +46,11 @@ export const menuLinks: HeaderMenuLink[] = [
   },
   {
     label: "Add User",
-    href: "/config-user",
+    href: "/add-user",
     icon: <UserPlusIcon className="h-4 w-4" />,
   },
   {
-    label: "Info",
+    label: "About",
     href: "/info",
     icon: <InformationCircleIcon className="h-4 w-4" />,
   },
