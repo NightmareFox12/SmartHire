@@ -27,14 +27,22 @@ const Home: NextPage = () => {
     account: address,
   });
 
+  const { data: adminAddress } = useScaffoldReadContract({
+    contractName: "TaskContract",
+    functionName: "admin",
+  });
+
   return (
     <>
       <ModalMetamask />
-      {address !== undefined && (
+      {address !== undefined && adminAddress !== undefined && (
         <section className="container mx-auto px-2 py-4 bg-base mt-5">
-          <h2 className="text-3xl font-semibold mb-4 text-center">Assigned Tasks</h2>
-          <UserTaskList address={address} taskListData={taskListData} isLoadingTaskList={isLoadingTaskList} />
-
+          {adminAddress !== address && (
+            <>
+              <h2 className="text-3xl font-semibold mb-4 text-center">Assigned Tasks</h2>
+              <UserTaskList address={address} taskListData={taskListData} isLoadingTaskList={isLoadingTaskList} />
+            </>
+          )}
           <h2 className="text-3xl font-semibold mt-8 text-center">Available Tasks</h2>
 
           {taskListWithoutResponsible && taskListWithoutResponsible.length > 0 && (
@@ -43,6 +51,7 @@ const Home: NextPage = () => {
                 <UserCardAvailableTask
                   key={x.taskID}
                   address={address}
+                  adminAddress={adminAddress}
                   taskID={x.taskID}
                   name={x.name}
                   description={x.description}

@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { NextPage } from "next";
 import { formatEther } from "viem";
-import { useAccount } from "wagmi";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface UserCardAvailableTaskProps {
-  address: string | undefined;
+  address: string;
+  adminAddress: string;
   taskID: bigint;
   name: string;
   description: string;
@@ -17,6 +17,7 @@ interface UserCardAvailableTaskProps {
 
 const UserCardAvailableTask: NextPage<UserCardAvailableTaskProps> = ({
   address,
+  adminAddress,
   taskID,
   name,
   description,
@@ -58,7 +59,11 @@ const UserCardAvailableTask: NextPage<UserCardAvailableTaskProps> = ({
             : Number(formatEther(reward)).toFixed(6) + " ETH"}
         </p>
         <div className="card-actions justify-center">
-          <button className="btn btn-primary" onClick={() => handleAcceptTask()}>
+          <button
+            className="btn btn-primary"
+            onClick={() => handleAcceptTask()}
+            disabled={address === adminAddress || isLoading}
+          >
             Accept task
           </button>
         </div>
