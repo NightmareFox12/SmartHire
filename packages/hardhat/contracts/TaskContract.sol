@@ -60,6 +60,14 @@ contract TaskContract is AccessControl {
         emit UserAdded(userID);
     }
 
+    function getAllUsers() public view returns (address[] memory) {
+        address[] memory userList = new address[](userID);
+        for (uint256 i = 0; i < userID; i++) {
+            userList[i] = users[i];
+        }
+        return userList;
+    }
+
     function getUserForAddress(address _addressUser) public view returns (bool) {
         require(_addressUser != address(0), "User address cannot be zero address");
 

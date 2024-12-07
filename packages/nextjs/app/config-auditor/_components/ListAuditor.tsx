@@ -10,7 +10,7 @@ type ListAuditorProps = {
 };
 
 const ListAuditor: NextPage<ListAuditorProps> = ({ address }) => {
-  //contract
+  //smart contract
   const { data: auditorListData } = useScaffoldReadContract({
     contractName: "TaskContract",
     functionName: "getAllAuditors",
@@ -59,7 +59,7 @@ const ListAuditor: NextPage<ListAuditorProps> = ({ address }) => {
               <tr className={x.block ? "bg-secondary" : "bg-primary"} key={y}>
                 <th>{y + 1}</th>
                 <td className="break-all md:break-normal">
-                  <Address address={x.auditorAddress} />
+                  <Address address={x.auditorAddress} format="long" />
                 </td>
                 <td className="sm:flex">
                   {x.block ? (

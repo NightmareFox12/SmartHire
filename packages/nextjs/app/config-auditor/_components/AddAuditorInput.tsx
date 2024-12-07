@@ -11,9 +11,22 @@ const AddAuditorInput: NextPage = () => {
 
   //smart contract
   const { writeContractAsync: writeContractAsync } = useScaffoldWriteContract("TaskContract");
+
   const { data: addressAdmin } = useScaffoldReadContract({
     contractName: "TaskContract",
     functionName: "admin",
+  });
+
+  const { data: existAuditor } = useScaffoldReadContract({
+    contractName: "TaskContract",
+    functionName: "getAuditorForAddress",
+    args: [auditorAddress],
+  });
+
+  const { data: existUser } = useScaffoldReadContract({
+    contractName: "TaskContract",
+    functionName: "getUserForAddress",
+    args: [auditorAddress],
   });
 
   const handleAddAuditor = async () => {
@@ -48,13 +61,20 @@ const AddAuditorInput: NextPage = () => {
         {auditorAddress === addressAdmin && (
           <span className="ps-2 text-error font-bold text-sm">The address is admin</span>
         )}
+        {(existAuditor || existUser) && (
+          <span className="ps-2 text-error font-bold text-sm">
+            The address is already {existAuditor ? "auditor" : "user"}
+          </span>
+        )}
       </div>
 
       <div className="md:w-96 lg:w-7/12">
         <button
           className="btn btn-primary w-full"
           onClick={handleAddAuditor}
-          disabled={addAuditorLoading || auditorAddress === "" || auditorAddress === addressAdmin}
+          disabled={
+            addAuditorLoading || auditorAddress === "" || auditorAddress === addressAdmin || existAuditor || existUser
+          }
         >
           {addAuditorLoading ? (
             <>

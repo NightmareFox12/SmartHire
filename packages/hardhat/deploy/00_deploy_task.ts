@@ -21,7 +21,11 @@ const deployTask: DeployFunction = async function (hre: HardhatRuntimeEnvironmen
   //   "0x545eC13A0D736474BCF62693322168f161a00447",
   // );
   // console.log("👋 Initial greeting:", await taskContract.greeting());
-  console.log("deploy with address", "0x545eC13A0D736474BCF62693322168f161a00447", "allAccounts.map(x => x)");
+  console.log(
+    "deploy with address",
+    "0x545eC13A0D736474BCF62693322168f161a00447",
+    allAccounts.map(x => x),
+  );
 };
 
 export default deployTask;

@@ -13,7 +13,7 @@ const ListUser: NextPage<ListUserProps> = ({ address }) => {
   //contract
   const { data: auditorListData } = useScaffoldReadContract({
     contractName: "TaskContract",
-    functionName: "getAllAuditors",
+    functionName: "getAllUsers",
     account: address,
   });
 
@@ -33,10 +33,10 @@ const ListUser: NextPage<ListUserProps> = ({ address }) => {
               <tr className={y % 2 == 0 ? "bg-secondary" : "bg-primary"} key={y}>
                 <th>{y + 1}</th>
                 <td className="break-all md:break-normal">
-                  <Address address={x.auditorAddress} format="long" />
+                  <Address address={x} format="long" />
                 </td>
                 <td>
-                  <Balance address={x.auditorAddress} />
+                  <Balance address={x} />
                 </td>
               </tr>
             ))}
