@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import FormCreateTask from "./_components/FormCreateTask";
 import { NextPage } from "next";
 import { useAccount } from "wagmi";

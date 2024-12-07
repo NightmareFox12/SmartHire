@@ -8,10 +8,8 @@ import { AddressInput, EtherInput, InputBase } from "~~/components/scaffold-eth"
 import {
   useScaffoldReadContract,
   useScaffoldWriteContract,
-  useTargetNetwork,
   useWatchBalance,
 } from "~~/hooks/scaffold-eth";
-import { useGlobalState } from "~~/services/store/store";
 
 interface FormCreateTaskProps {
   address: string;
@@ -19,13 +17,12 @@ interface FormCreateTaskProps {
 }
 
 const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }) => {
-  //form
+  // states
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [responsibleAddress, setResponsibleAddress] = useState<string>("");
   const [ethReward, setEthReward] = useState("");
 
-  // States
   const [submitLoader, setSubmitLoader] = useState<boolean>(false);
 
   //smart contract
@@ -125,20 +122,23 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
               placeholder="Responsible Address (Optional)"
             />
 
-            {adminAddress === responsibleAddress && (
+            {adminAddress === responsibleAddress ? (
               <span className="ps-2 text-error font-bold text-sm">The address is admin</span>
-            )}
-            {isAuditor && <span className="ps-2 text-error font-bold text-sm">The address is auditor</span>}
-            {!isAuditor && (
+            ) : (
               <>
-                <span className="ps-2 text-error font-bold text-sm">The address is not user </span>
+                {isAuditor && <span className="ps-2 text-error font-bold text-sm">The address is auditor</span>}
+                {responsibleAddress.length > 6 && !isUser && (
+                  <>
+                    <span className="ps-2 text-error font-bold text-sm">The address is not user </span>
 
-                <Link
-                  href={`/add-user?address=${responsibleAddress}`}
-                  className="text-white decoration-solid visited:text-white decoration-2 underline underline-offset-1"
-                >
-                  Add user
-                </Link>
+                    <Link
+                      href={`/add-user?address=${responsibleAddress}`}
+                      className="text-base-300 decoration-solid visited:text-secondary decoration-2 underline underline-offset-1"
+                    >
+                      Add user
+                    </Link>
+                  </>
+                )}
               </>
             )}
           </div>

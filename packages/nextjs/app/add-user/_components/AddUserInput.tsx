@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { NextPage } from "next";
+import { useRouter } from "next-nprogress-bar";
 import { AddressInput } from "~~/components/scaffold-eth";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
@@ -10,6 +12,10 @@ type AddUserInputProps = {
 };
 
 const AddUserInput: NextPage<AddUserInputProps> = ({ address }) => {
+  const searchParams = useSearchParams();
+  const addressQuery = searchParams.get("address");
+
+  //states
   const [userAddress, setUserAddress] = useState<string>("");
   const [addUserLoading, setAddUserLoading] = useState<boolean>(false);
 
@@ -33,6 +39,7 @@ const AddUserInput: NextPage<AddUserInputProps> = ({ address }) => {
     args: [userAddress],
   });
 
+  //functions
   const handleAddUser = async () => {
     try {
       setAddUserLoading(true);
@@ -50,6 +57,10 @@ const AddUserInput: NextPage<AddUserInputProps> = ({ address }) => {
       setAddUserLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (addressQuery !== null) setUserAddress(addressQuery);
+  }, []);
 
   return (
     <section className="flex flex-col justify-center items-center w-full px-5 gap-3">
