@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { NextPage } from "next";
 import { AddressInput } from "~~/components/scaffold-eth";
-import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const AddAuditorInput: NextPage = () => {
   const [auditorAddress, setAuditorAddress] = useState<string>("");
@@ -11,6 +11,10 @@ const AddAuditorInput: NextPage = () => {
 
   //smart contract
   const { writeContractAsync: writeContractAsync } = useScaffoldWriteContract("TaskContract");
+  const { data: addressAdmin } = useScaffoldReadContract({
+    contractName: "TaskContract",
+    functionName: "admin",
+  });
 
   const handleAddAuditor = async () => {
     try {
@@ -30,22 +34,37 @@ const AddAuditorInput: NextPage = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center gap-2 px-4">
-      <AddressInput value={auditorAddress} onChange={setAuditorAddress} placeholder="Auditor address" />
-
-      <button
-        className="btn btn-primary mx-5"
-        onClick={handleAddAuditor}
-        disabled={addAuditorLoading || auditorAddress === ""}
-      >
-        {addAuditorLoading ? (
-          <>
-            <span className="loading loading-spinner" /> Loading
-          </>
-        ) : (
-          "Add Auditor"
+    <section className="flex flex-col justify-center items-center w-full px-5 gap-3">
+      <div className="md:w-96 lg:w-7/12">
+        <label className="font-bold ps-2" htmlFor="auditor-address">
+          Auditor Address <span className="font-bold text-error text-sm">*</span>
+        </label>
+        <AddressInput
+          name="auditor-address"
+          value={auditorAddress}
+          onChange={setAuditorAddress}
+          placeholder="Auditor address"
+        />
+        {auditorAddress === addressAdmin && (
+          <span className="ps-2 text-error font-bold text-sm">The address is admin</span>
         )}
-      </button>
+      </div>
+
+      <div className="md:w-96 lg:w-7/12">
+        <button
+          className="btn btn-primary w-full"
+          onClick={handleAddAuditor}
+          disabled={addAuditorLoading || auditorAddress === "" || auditorAddress === addressAdmin}
+        >
+          {addAuditorLoading ? (
+            <>
+              <span className="loading loading-spinner" /> Loading
+            </>
+          ) : (
+            "Add Auditor"
+          )}
+        </button>
+      </div>
     </section>
   );
 };

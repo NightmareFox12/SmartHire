@@ -35,6 +35,7 @@ contract TaskContract is AccessControl {
     //events
     event AuditorAdded(address indexed auditor);
     event TaskAdded(uint256 indexed taskID, string name);
+    event UserAdded(uint256 indexed userID);
 
     //constructor
     constructor(address _admin) {
@@ -43,15 +44,30 @@ contract TaskContract is AccessControl {
     }
 
     //functions
-    function addUser(address _addressUser) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function addUser(address _addressUser) public {
         require(_addressUser != address(0), "User address cannot be zero address");
         require(admin != _addressUser, "Admin cannot be user");
         require(
             hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(AUDITOR_ROLE, msg.sender),
             "Caller is not an admin or auditor"
         );
+
+        require(!getUserForAddress(_addressUser), "User already exists");
+        require(!getAuditorForAddress(_addressUser), "Adress is auditor");
+
         users[userID] = _addressUser;
         userID++;
+        emit UserAdded(userID);
+    }
+
+    function getUserForAddress(address _addressUser) public view returns (bool) {
+        require(_addressUser != address(0), "User address cannot be zero address");
+
+        for (uint i = 0; i < userID; i++) {
+            if (users[i] == _addressUser) return true;
+        }
+
+        return false;
     }
 
     function createTask(string memory _name, string memory _description) public payable onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -98,9 +114,7 @@ contract TaskContract is AccessControl {
     function getTasksByResponsible() public view returns (Task[] memory) {
         require(msg.sender != address(0), "Sender address is required");
         uint256 count = 0;
-        for (uint256 i = 0; i < taskID; i++) {
-            if (tasks[i].responsible == msg.sender) count++;
-        }
+        for (uint256 i = 0; i < taskID; i++) if (tasks[i].responsible == msg.sender) count++;
 
         Task[] memory result = new Task[](count);
 
@@ -145,7 +159,8 @@ contract TaskContract is AccessControl {
     function addAuditor(address _auditorAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(_auditorAddress != address(0), "Auditor address cannot be zero address");
         require(admin != _auditorAddress, "Admin cannot be auditor");
-        require(!getAuditorForAddress(_auditorAddress), "adress exist");
+        require(!getAuditorForAddress(_auditorAddress), "Auditor already exist");
+        require(!getUserForAddress(_auditorAddress), "User already exists");
 
         auditors[auditorID] = Auditor(auditorID, _auditorAddress, false);
         _grantRole(AUDITOR_ROLE, _auditorAddress);

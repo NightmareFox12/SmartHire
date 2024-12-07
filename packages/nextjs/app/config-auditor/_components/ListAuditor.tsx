@@ -2,6 +2,7 @@
 
 import AuditorListLoader from "../../../components/ListLoader";
 import { NextPage } from "next";
+import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 type ListAuditorProps = {
@@ -43,9 +44,9 @@ const ListAuditor: NextPage<ListAuditorProps> = ({ address }) => {
   };
 
   return (
-    <section className="px-2">
+    <section className="flex justify-center mt-8">
       {auditorListData !== undefined ? (
-        <table className="table break-all">
+        <table className="table w-96 lg:w-7/12">
           <thead>
             <tr>
               <th></th>
@@ -57,10 +58,12 @@ const ListAuditor: NextPage<ListAuditorProps> = ({ address }) => {
             {auditorListData.map((x, y) => (
               <tr className={x.block ? "bg-secondary" : "bg-primary"} key={y}>
                 <th>{y + 1}</th>
-                <td>{x.auditorAddress.toString()}</td>
+                <td className="break-all md:break-normal">
+                  <Address address={x.auditorAddress} />
+                </td>
                 <td className="sm:flex">
                   {x.block ? (
-                    <button className="btn bg-accent" onClick={() => unlockAuditor(x.auditorID)}>
+                    <button className="btn bg-primary" onClick={() => unlockAuditor(x.auditorID)}>
                       Unlock
                     </button>
                   ) : (

@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     TaskContract: {
-      address: "0xbCF26943C0197d2eE0E5D05c716Be60cc2761508",
+      address: "0x05Aa229Aec102f78CE0E852A812a388F076Aa555",
       abi: [
         {
           inputs: [
@@ -146,6 +146,19 @@ const deployedContracts = {
             },
           ],
           name: "TaskAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "userID",
+              type: "uint256",
+            },
+          ],
+          name: "UserAdded",
           type: "event",
         },
         {
@@ -544,6 +557,25 @@ const deployedContracts = {
               internalType: "struct TaskContract.Task[]",
               name: "",
               type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_addressUser",
+              type: "address",
+            },
+          ],
+          name: "getUserForAddress",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
             },
           ],
           stateMutability: "view",

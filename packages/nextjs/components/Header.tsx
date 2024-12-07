@@ -39,12 +39,12 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <PlusIcon className="h-4 w-4" />,
   },
   {
-    label: "Config Auditors",
+    label: "Config Auditor",
     href: "/config-auditor",
     icon: <Cog6ToothIcon className="h-4 w-4" />,
   },
   {
-    label: "Config Users",
+    label: "Add User",
     href: "/config-user",
     icon: <UserPlusIcon className="h-4 w-4" />,
   },

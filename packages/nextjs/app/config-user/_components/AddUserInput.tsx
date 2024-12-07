@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { NextPage } from "next";
 import { AddressInput } from "~~/components/scaffold-eth";
-import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 type AddUserInputProps = {
   address: string;
@@ -15,6 +15,11 @@ const AddUserInput: NextPage<AddUserInputProps> = ({ address }) => {
 
   //smart contract
   const { writeContractAsync: writeContractAsync } = useScaffoldWriteContract("TaskContract");
+
+  const { data: addressAdmin } = useScaffoldReadContract({
+    contractName: "TaskContract",
+    functionName: "admin",
+  });
 
   const handleAddUser = async () => {
     try {
@@ -44,7 +49,7 @@ const AddUserInput: NextPage<AddUserInputProps> = ({ address }) => {
         <button
           className="btn btn-primary w-full"
           onClick={handleAddUser}
-          disabled={addUserLoading || userAddress === ""}
+          disabled={addUserLoading || userAddress === "" || userAddress === addressAdmin}
         >
           {addUserLoading ? (
             <>
