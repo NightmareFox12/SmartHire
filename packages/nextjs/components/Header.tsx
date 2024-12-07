@@ -44,11 +44,6 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <Cog6ToothIcon className="h-4 w-4" />,
   },
   {
-    label: "Reports",
-    href: "/config-auditor",
-    icon: <Cog6ToothIcon className="h-4 w-4" />,
-  },
-  {
     label: "Config Users",
     href: "/config-user",
     icon: <UserPlusIcon className="h-4 w-4" />,
