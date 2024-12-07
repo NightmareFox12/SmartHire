@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { parseEther } from "viem";
-import { AddressInput, EtherInput, InputBase } from "~~/components/scaffold-eth";
-import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { getChainId } from "viem/actions";
+import { useAccount, useBalance, useChainId } from "wagmi";
+import { AddressInput, Balance, EtherInput, InputBase } from "~~/components/scaffold-eth";
+import {
+  useScaffoldReadContract,
+  useScaffoldWriteContract,
+  useTargetNetwork,
+  useWatchBalance,
+} from "~~/hooks/scaffold-eth";
+import { useGlobalState } from "~~/services/store/store";
 
 interface FormCreateTaskProps {
   address: string;
@@ -12,15 +20,21 @@ interface FormCreateTaskProps {
 }
 
 const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }) => {
+  //form
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [responsibleAddress, setResponsibleAddress] = useState<string>("");
   const [ethReward, setEthReward] = useState("");
 
-  const { writeContractAsync: writeTaskContractAsync } = useScaffoldWriteContract("TaskContract");
-
   // States
   const [submitLoader, setSubmitLoader] = useState<boolean>(false);
+
+  //smart contract
+  const { targetNetwork } = useTargetNetwork();
+  const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrency.price);
+  const { data: balance, isError, isLoading } = useWatchBalance({ address });
+
+  const { writeContractAsync: writeTaskContractAsync } = useScaffoldWriteContract("TaskContract");
 
   // Functions
   const clearInputs = () => {
@@ -29,6 +43,8 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
     setResponsibleAddress("");
     setEthReward("");
   };
+
+  const handlePriceAlert = () => {};
 
   const handleCreateTask = async () => {
     try {
@@ -85,13 +101,13 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
 
           <div className="flex flex-col">
             <label className="font-bold ps-2" htmlFor="task-description">
-              Task Name <span className="font-bold text-error text-sm">*</span>
+              Task Description <span className="font-bold text-error text-sm">*</span>
             </label>
             <textarea
               name="task-description"
               value={description}
               onChange={e => setDescription(e.target.value)}
-              className="textarea border-base-300 border-2 bg-base-200 focus:outline-none text-opacity-50 dark:text-opacity-80 focus:border-base-300 placeholder:text-accent placeholder:text-[16px] text-base-content opacity-90 font-semibold"
+              className="textarea border-base-300 border-2 bg-base-200 focus:outline-none text-opacity-50 dark:text-opacity-80 focus:border-base-300 placeholder:text-base-content/80 placeholder:text-[16px] text-base-content opacity-90 font-semibold"
               placeholder="Description"
             ></textarea>
           </div>
@@ -120,6 +136,11 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
               Reward <span className="font-bold text-error text-sm">*</span>
             </label>
             <EtherInput value={ethReward} onChange={setEthReward} placeholder="Reward" usdMode={true} />
+
+            {balance && balance.value < parseEther(ethReward) && (
+              <span className="ps-2 text-error font-bold text-sm">Insufficient balance</span>
+            )}
+            {isAuditor && <span className="ps-2 text-error font-bold text-sm">The address is auditor</span>}
           </div>
         </div>
 
@@ -133,7 +154,9 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
               description.length <= 5 ||
               ethReward === "" ||
               responsibleAddress === adminAddress ||
-              adminAddress === responsibleAddress
+              isAuditor ||
+              balance?.value === 0n ||
+              (balance && balance.value < parseEther(ethReward))
             }
           >
             {submitLoader ? (
