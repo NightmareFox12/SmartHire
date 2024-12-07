@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { NextPage } from "next";
 import { parseEther } from "viem";
 import { AddressInput, EtherInput, InputBase } from "~~/components/scaffold-eth";
@@ -28,11 +29,26 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
   const [submitLoader, setSubmitLoader] = useState<boolean>(false);
 
   //smart contract
-  const { targetNetwork } = useTargetNetwork();
-  const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrency.price);
   const { data: balance, isError, isLoading } = useWatchBalance({ address });
 
   const { writeContractAsync: writeTaskContractAsync } = useScaffoldWriteContract("TaskContract");
+
+  const { data: taskID, isLoading: isTaskIDLoading } = useScaffoldReadContract({
+    contractName: "TaskContract",
+    functionName: "taskID",
+  });
+
+  const { data: isAuditor } = useScaffoldReadContract({
+    contractName: "TaskContract",
+    functionName: "getAuditorForAddress",
+    args: [responsibleAddress],
+  });
+
+  const { data: isUser } = useScaffoldReadContract({
+    contractName: "TaskContract",
+    functionName: "getUserForAddress",
+    args: [responsibleAddress],
+  });
 
   // Functions
   const clearInputs = () => {
@@ -41,8 +57,6 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
     setResponsibleAddress("");
     setEthReward("");
   };
-
-  const handlePriceAlert = () => {};
 
   const handleCreateTask = async () => {
     try {
@@ -67,18 +81,6 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
       setSubmitLoader(false);
     }
   };
-
-  // Smart Contract
-  const { data: taskID, isLoading: isTaskIDLoading } = useScaffoldReadContract({
-    contractName: "TaskContract",
-    functionName: "taskID",
-  });
-
-  const { data: isAuditor } = useScaffoldReadContract({
-    contractName: "TaskContract",
-    functionName: "getAuditorForAddress",
-    args: [responsibleAddress],
-  });
 
   return (
     <div className="flex justify-center items-start min-h-screen p-4 pt-10">
@@ -127,6 +129,18 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
               <span className="ps-2 text-error font-bold text-sm">The address is admin</span>
             )}
             {isAuditor && <span className="ps-2 text-error font-bold text-sm">The address is auditor</span>}
+            {!isAuditor && (
+              <>
+                <span className="ps-2 text-error font-bold text-sm">The address is not user </span>
+
+                <Link
+                  href={`/add-user?address=${responsibleAddress}`}
+                  className="text-white decoration-solid visited:text-white decoration-2 underline underline-offset-1"
+                >
+                  Add user
+                </Link>
+              </>
+            )}
           </div>
 
           <div>

@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     TaskContract: {
-      address: "0x90118d110B07ABB82Ba8980D1c5cC96EeA810d2C",
+      address: "0x8464135c8F25Da09e49BC8782676a84730C318bC",
       abi: [
         {
           inputs: [
