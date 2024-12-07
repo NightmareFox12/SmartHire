@@ -2,7 +2,8 @@
 
 import { NextPage } from "next";
 import ListLoader from "~~/components/ListLoader";
-import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { Address, Balance } from "~~/components/scaffold-eth";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 type ListUserProps = {
   address: string;
@@ -16,58 +17,26 @@ const ListUser: NextPage<ListUserProps> = ({ address }) => {
     account: address,
   });
 
-  const { writeContractAsync: writeContractAsync } = useScaffoldWriteContract("TaskContract");
-
-  const blockAuditor = async (auditID: bigint) => {
-    try {
-      await writeContractAsync({
-        functionName: "blockAuditor",
-        args: [auditID],
-        account: address,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const unlockAuditor = async (auditID: bigint) => {
-    try {
-      await writeContractAsync({
-        functionName: "unlockAuditor",
-        args: [auditID],
-        account: address,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
-    <section className="px-2">
+    <section className="flex justify-center mt-8">
       {auditorListData !== undefined ? (
-        <table className="table break-all">
+        <table className="table w-96 lg:w-7/12">
           <thead>
             <tr>
               <th></th>
               <th>Address</th>
-              <th>Actions</th>
+              <th>Balance</th>
             </tr>
           </thead>
           <tbody>
             {auditorListData.map((x, y) => (
-              <tr className={x.block ? "bg-secondary" : "bg-primary"} key={y}>
+              <tr className={y % 2 == 0 ? "bg-secondary" : "bg-primary"} key={y}>
                 <th>{y + 1}</th>
-                <td>{x.auditorAddress.toString()}</td>
-                <td className="sm:flex">
-                  {x.block ? (
-                    <button className="btn bg-accent" onClick={() => unlockAuditor(x.auditorID)}>
-                      Unlock
-                    </button>
-                  ) : (
-                    <button className="btn bg-error" onClick={() => blockAuditor(x.auditorID)}>
-                      Block
-                    </button>
-                  )}
+                <td className="break-all md:break-normal">
+                  <Address address={x.auditorAddress} format="long" />
+                </td>
+                <td>
+                  <Balance address={x.auditorAddress} />
                 </td>
               </tr>
             ))}

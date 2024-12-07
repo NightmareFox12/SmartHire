@@ -16,7 +16,7 @@ const AddUserInput: NextPage<AddUserInputProps> = ({ address }) => {
   //smart contract
   const { writeContractAsync: writeContractAsync } = useScaffoldWriteContract("TaskContract");
 
-  const handleAddAuditor = async () => {
+  const handleAddUser = async () => {
     try {
       setAddUserLoading(true);
 
@@ -35,22 +35,26 @@ const AddUserInput: NextPage<AddUserInputProps> = ({ address }) => {
   };
 
   return (
-    <section className="flex flex-col justify-center gap-2 px-4 sm:px-12">
-      <AddressInput value={userAddress} onChange={setUserAddress} placeholder="User address" />
+    <section className="flex flex-col justify-center items-center w-full px-5 gap-3">
+      <div className="md:w-96 lg:w-7/12">
+        <AddressInput value={userAddress} onChange={setUserAddress} placeholder="User address" />
+      </div>
 
-      <button
-        className="btn btn-primary mx-5"
-        onClick={handleAddAuditor}
-        disabled={addUserLoading || userAddress === ""}
-      >
-        {addUserLoading ? (
-          <>
-            <span className="loading loading-spinner" /> Loading
-          </>
-        ) : (
-          "Add Auditor"
-        )}
-      </button>
+      <div className="md:w-96 lg:w-7/12">
+        <button
+          className="btn btn-primary w-full"
+          onClick={handleAddUser}
+          disabled={addUserLoading || userAddress === ""}
+        >
+          {addUserLoading ? (
+            <>
+              <span className="loading loading-spinner" /> Loading
+            </>
+          ) : (
+            "Add User"
+          )}
+        </button>
+      </div>
     </section>
   );
 };
