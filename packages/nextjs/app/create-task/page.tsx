@@ -10,6 +10,7 @@ import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 const CreateTask: NextPage = () => {
   const { address } = useAccount();
 
+  //smart contract
   const { data: adminAddress } = useScaffoldReadContract({
     contractName: "TaskContract",
     functionName: "admin",
@@ -22,7 +23,7 @@ const CreateTask: NextPage = () => {
       {address !== undefined && adminAddress !== undefined && address === adminAddress && (
         <>
           <h2 className="text-3xl p-2 font-medium text-center">Create Task</h2>
-          <FormCreateTask />
+          <FormCreateTask address={address} adminAddress={adminAddress} />
         </>
       )}
     </>
