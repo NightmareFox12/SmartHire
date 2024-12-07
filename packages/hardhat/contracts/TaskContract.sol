@@ -35,7 +35,7 @@ contract TaskContract is AccessControl {
     //events
     event AuditorAdded(address indexed auditor);
     event TaskAdded(uint256 indexed taskID, string name);
-    event UserAdded(uint256 indexed userID);
+    event UserAdded(address indexed userAddress);
 
     //constructor
     constructor(address _admin) {
@@ -57,7 +57,7 @@ contract TaskContract is AccessControl {
 
         users[userID] = _addressUser;
         userID++;
-        emit UserAdded(userID);
+        emit UserAdded(_addressUser);
     }
 
     function getAllUsers() public view returns (address[] memory) {
@@ -158,11 +158,14 @@ contract TaskContract is AccessControl {
     }
 
     function acceptTask(uint256 _taskID) public {
-        require(msg.sender != address(0), "Sender address is required");
         require(msg.sender != admin, "Address is admin");
         require(tasks[_taskID].responsible == address(0), "Task must have a responsible assigned");
+        require(!getAuditorForAddress(msg.sender), "The auditor cannot take on tasks");
 
         tasks[_taskID].responsible = payable(msg.sender);
+        users[userID] = msg.sender;
+        userID++;
+        emit UserAdded(msg.sender);
     }
 
     function addAuditor(address _auditorAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {

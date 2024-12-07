@@ -133,7 +133,7 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
 
                     <Link
                       href={`/add-user?address=${responsibleAddress}`}
-                      className="text-base-300 decoration-solid visited:text-secondary decoration-2 underline underline-offset-1"
+                      className="text-base-primary decoration-solid visited:text-secondary decoration-2 underline underline-offset-1"
                     >
                       Add user
                     </Link>

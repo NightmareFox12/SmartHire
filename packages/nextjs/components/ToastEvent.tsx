@@ -5,10 +5,13 @@ import { NextPage } from "next";
 import { useScaffoldWatchContractEvent } from "~~/hooks/scaffold-eth";
 
 const ToastEvent: NextPage = () => {
+  //states
   const [auditorAddress, setAuditorAddress] = useState<string | undefined>(undefined);
   const [nameTask, setNameTask] = useState<string | undefined>(undefined);
+  const [addressUser, setAddressUser] = useState<string | undefined>(undefined);
   const [showToastAuditor, setShowAuditor] = useState<boolean>(false);
   const [showToastTask, setShowToastTask] = useState<boolean>(false);
+  const [showToastUser, setShowToastUser] = useState<boolean>(false);
 
   useEffect(() => {
     if (auditorAddress !== undefined) {
@@ -27,6 +30,15 @@ const ToastEvent: NextPage = () => {
       }, 2500);
     }
   }, [nameTask]);
+
+  useEffect(() => {
+    if (addressUser !== undefined) {
+      setShowToastUser(true);
+      setTimeout(() => {
+        setShowToastUser(false);
+      }, 2500);
+    }
+  }, [addressUser]);
 
   //events
   useScaffoldWatchContractEvent({
@@ -51,26 +63,46 @@ const ToastEvent: NextPage = () => {
     },
   });
 
+  useScaffoldWatchContractEvent({
+    contractName: "TaskContract",
+    eventName: "UserAdded",
+    onLogs: logs => {
+      logs.map(log => {
+        const { userAddress } = log.args;
+        if (userAddress !== undefined) setAddressUser(userAddress);
+      });
+    },
+  });
+
   return (
     <>
-    {showToastAuditor &&
-      <div
-        className={`toast toast-end z-50 transition-opacity ease-in-out duration-500 ${showToastAuditor ? "opacity-100" : "opacity-0"}`}
-      >
-        <div className="alert alert-info">
-          <span>New auditor added: {auditorAddress?.slice(0, 5)}...</span>{" "}
+      {showToastAuditor && (
+        <div
+          className={`toast toast-end z-50 transition-opacity ease-in-out duration-500 ${showToastAuditor ? "opacity-100" : "opacity-0"}`}
+        >
+          <div className="alert bg-primary">
+            <span>New auditor added: {auditorAddress?.slice(0, 6)}...</span>{" "}
+          </div>
         </div>
-      </div>
-      }
-      {showToastTask &&
-      <div
-        className={`toast toast-end z-50 transition-opacity ease-in-out duration-500 ${showToastTask ? "opacity-100" : "opacity-0"}`}
-      >
-        <div className="alert alert-info">
-          <span>New task added: {nameTask?.slice(0, 20)}...</span>
+      )}
+      {showToastTask && (
+        <div
+          className={`toast toast-end z-50 transition-opacity ease-in-out duration-500 ${showToastTask ? "opacity-100" : "opacity-0"}`}
+        >
+          <div className="alert bg-primary">
+            <span>New task added: {nameTask?.slice(0, 20)}...</span>
+          </div>
         </div>
-      </div>
-      }
+      )}
+      {showToastUser && (
+        <div
+          className={`toast toast-end z-50 transition-opacity ease-in-out duration-500 ${showToastUser ? "opacity-100" : "opacity-0"}`}
+        >
+          <div className="alert bg-primary">
+            <span>New user added: {addressUser?.slice(0, 6)}...</span>
+          </div>
+        </div>
+      )}
     </>
   );
 };
