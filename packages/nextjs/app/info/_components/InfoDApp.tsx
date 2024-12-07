@@ -97,22 +97,22 @@ const InfoDApp = () => {
 
                 <h2 className="text-3xl font-semibold text-center text-dark py-8">NON-FUNCTIONAL REQUIREMENTS</h2>
                 <ul className="text-dark mt-4 space-y-4 ml-8">
-                    <li className="flex items-center "><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Security: </strong> Protection against unauthorized access through defined roles and permissions.</li>
-                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Scalability: </strong> Adaptation to a growing number of users and tasks without compromising performance.</li>
-                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Performance: </strong> Efficient response in task assignment, validation, and rewards.</li>
-                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Availability: </strong>  Continuous operability ensured on the blockchain network.</li>
-                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Extensibility: </strong> Easy addition of new functionalities and roles using OpenZeppelin.</li>
-                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Usability: </strong> User-friendly interface for interaction with roles within the dApp.</li>
+                    <li className="flex items-center "><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Security: </span> Protection against unauthorized access through defined roles and permissions.</li>
+                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Scalability: </span> Adaptation to a growing number of users and tasks without compromising performance.</li>
+                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Performance: </span> Efficient response in task assignment, validation, and rewards.</li>
+                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Availability: </span>  Continuous operability ensured on the blockchain network.</li>
+                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Extensibility: </span> Easy addition of new functionalities and roles using OpenZeppelin.</li>
+                    <li className="flex items-center"><ShieldCheckIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Usability: </span> User-friendly interface for interaction with roles within the dApp.</li>
                 </ul>
             </section>
 
-            <section className="technologies my-12 py-8">
+            <section className="technologies my-12 py-8 p-8">
                 <h2 className="text-3xl font-semibold text-center text-dark py-8">TECHNOLOGIES</h2>
                 <ul className="text-dark mt-4 space-y-4">
-                    <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /> Solidity: A programming language used for creating smart contracts, enabling secure automation of tasks and processes on the blockchain.</li>
-                    <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /> Scaffold-ETH-2: An advanced framework that facilitates dApp development by integrating a complete setup for testing, deployment, and continuous development.</li>
-                    <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /> OpenZeppelin (AccessControl.sol): A library providing predefined tools for managing roles and permissions in smart contracts, enhancing security and reducing code complexity.</li>
-                    <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /> Arbitrum Sepolia: A scalable blockchain network compatible with Ethereum, used to deploy SmartHire’s smart contracts, ensuring reduced transaction costs and high efficiency.</li>
+                    <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /><span className="font-bold">Solidity:</span> A programming language used for creating smart contracts, enabling secure automation of tasks and processes on the blockchain.</li>
+                    <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /><span className="font-bold"> Scaffold-ETH-2:</span> An advanced framework that facilitates dApp development by integrating a complete setup for testing, deployment, and continuous development.</li>
+                    <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /><span className="font-bold"> OpenZeppelin (AccessControl.sol):</span> A library providing predefined tools for managing roles and permissions in smart contracts, enhancing security and reducing code complexity.</li>
+                    <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /><span className="font-bold"> Arbitrum Sepolia:</span> A scalable blockchain network compatible with Ethereum, used to deploy SmartHire’s smart contracts, ensuring reduced transaction costs and high efficiency.</li>
                 </ul>
             </section>
 
@@ -124,30 +124,30 @@ const InfoDApp = () => {
                     <div className="dev-card text-center p-6 bg-primary rounded-lg shadow-lg  transition-transform duration-300 hover:scale-105">
                         <h3 className="text-xl font-bold text-dark py-4">Main Developer</h3>
                         <ul className="text-dark mt-2 space-y-4">
-                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Name:</strong> Carlos Henríquez</li>
-                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Username:</strong>NightmareFox12</li>
-                            <li className="flex items-center"><LinkIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">GitHub:</strong> <a href="https://github.com/NightmareFox12" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
-                            <li><strong>Role in Project:</strong> Main developer, responsible for the core programming of the dApp.</li>
+                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Name:</span> Carlos Henríquez</li>
+                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Username:</span>NightmareFox12</li>
+                            <li className="flex items-center"><LinkIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">GitHub:</span> <a href="https://github.com/NightmareFox12" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
+                            <li><span>Role in Project:</span> Main developer, responsible for the core programming of the dApp.</li>
                         </ul>
                     </div>
 
                     <div className="dev-card text-center p-6 bg-primary rounded-lg shadow-lg ml-4  transition-transform duration-300 hover:scale-105">
                         <h3 className="text-xl font-bold text-dark py-4">Developer and Documentation</h3>
                         <ul className="text-dark mt-2 space-y-4">
-                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2"> Name:</strong> Miguel Rodríguez</li>
-                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2"> Username:</strong>Echizen512</li>
-                            <li className="flex items-center"><LinkIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">GitHub:</strong> <a href="https://github.com/Echizen512" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
-                            <li><strong>Role in Project:</strong> Developer and responsible for documentation and writing detailed guides for the project.</li>
+                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold"> Name:</span> Miguel Rodríguez</li>
+                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold"> Username:</span>Echizen512</li>
+                            <li className="flex items-center"><LinkIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">GitHub:</span> <a href="https://github.com/Echizen512" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
+                            <li><span>Role in Project:</span> Developer and responsible for documentation and writing detailed guides for the project.</li>
                         </ul>
                     </div>
 
                     <div className="dev-card text-center p-6 bg-primary rounded-lg shadow-lg mr-4  transition-transform duration-300 hover:scale-105">
                         <h3 className="text-xl font-bold text-dark py-4">Developer</h3>
                         <ul className="text-dark mt-2 space-y-4">
-                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Name:</strong> Miguel Mejías</li>
-                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">Username:</strong> </li>
-                            <li className="flex items-center"><LinkIcon className="h-5 w-5 text-dark mr-2" /><strong className="me-2">GitHub:</strong> <a href="" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
-                            <li><strong>Role in Project:</strong> Programmer, focusing on the development of secondary features and optimizations.</li>
+                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Name:</span> Miguel Mejías</li>
+                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Username:</span> </li>
+                            <li className="flex items-center"><LinkIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">GitHub:</span> <a href="" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
+                            <li><span>Role in Project:</span> Programmer, focusing on the development of secondary features and optimizations.</li>
                         </ul>
                     </div>
                 </div>
