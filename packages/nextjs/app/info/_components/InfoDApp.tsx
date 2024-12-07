@@ -114,6 +114,44 @@ const InfoDApp = () => {
                     <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /> Arbitrum Sepolia: A scalable blockchain network compatible with Ethereum, used to deploy SmartHire’s smart contracts, ensuring reduced transaction costs and high efficiency.</li>
                 </ul>
             </section>
+
+            <section className="dev-team bg-secondary py-8 rounded-lg shadow-lg">
+                <h2 className="text-3xl font-semibold text-center text-dark">
+                    DEV TEAM
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8 ml-4">
+                    <div className="dev-card text-center p-6 bg-primary rounded-lg shadow-lg">
+                        <h3 className="text-xl font-bold text-dark">Main Developer</h3>
+                        <ul className="text-dark mt-2 space-y-4">
+                            <li><strong>Name:</strong> Carlos Henríquez</li>
+                            <li><strong>Username:</strong> </li>
+                            <li><strong>GitHub:</strong> <a href="" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
+                            <li><strong>Role in Project:</strong> Main developer, responsible for the core programming of the dApp.</li>
+                        </ul>
+                    </div>
+
+                    <div className="dev-card text-center p-6 bg-primary rounded-lg shadow-lg ml-4">
+                        <h3 className="text-xl font-bold text-dark">Developer and Documentation</h3>
+                        <ul className="text-dark mt-2 space-y-4">
+                            <li><strong>Name:</strong> Miguel Rodríguez</li>
+                            <li><strong>Username:</strong> </li>
+                            <li><strong>GitHub:</strong> <a href="" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
+                            <li><strong>Role in Project:</strong> Developer and responsible for documentation and writing detailed guides for the project.</li>
+                        </ul>
+                    </div>
+
+                    <div className="dev-card text-center p-6 bg-primary rounded-lg shadow-lg mr-4">
+                        <h3 className="text-xl font-bold text-dark">Developer</h3>
+                        <ul className="text-dark mt-2 space-y-4">
+                            <li><strong>Name:</strong> Miguel Mejías</li>
+                            <li><strong>Username:</strong> </li>
+                            <li><strong>GitHub:</strong> <a href="" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
+                            <li><strong>Role in Project:</strong> Programmer, focusing on the development of secondary features and optimizations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
         </div>
     );
 };
