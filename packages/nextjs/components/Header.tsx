@@ -130,7 +130,7 @@ export const Header = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Smart Hire</span>
-            <span className="text-xs">???</span>
+            <span className="text-xs">DAO</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-1  menu menu-horizontal px-1 gap-2">

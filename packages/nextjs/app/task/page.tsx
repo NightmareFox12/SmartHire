@@ -1,40 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import CardTaskCollapse from "./_components/CardTaskCollapse";
 import ModalAdminOrAuditor from "../../components/ModalAdminOrAuditor";
+import CardTaskCollapse from "./_components/CardTaskCollapse";
+import FilterTaskButton from "./_components/FilterTaskButton";
 import TaskListLoader from "./_components/TaskListLoader";
+import { ITask } from "./_entity/Task.entity";
 import { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 import ModalMetamask from "~~/components/ModalMetamask";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
-import { useGlobalState } from "~~/services/store/store";
-
-interface Ayuda {
-  taskID: bigint;
-  name: string;
-  description: string;
-  reward: bigint;
-  responsible: string;
-  completed: boolean;
-}
 
 const Task: NextPage = () => {
   const { address } = useAccount();
 
-  const [filteredTasks, setFilteredTasks] = useState<Ayuda[] | undefined>(undefined);
+  const [filteredTasks, setFilteredTasks] = useState<ITask[] | undefined>(undefined);
 
   const { data: taskList, isLoading: isTaskListLoading } = useScaffoldReadContract({
     contractName: "TaskContract",
     functionName: "getAllTasks",
     account: address,
   });
-
-  const handleTaskFilter = () => {
-    const taskFiltered = taskList?.filter(task => task.responsible.includes("0x0000000000"));
-    setFilteredTasks(taskFiltered);
-  };
 
   return (
     <>
@@ -46,40 +32,11 @@ const Task: NextPage = () => {
         <TaskListLoader items={10} />
       ) : (
         <section className="overflow-x-hidden">
-          {taskList !== undefined && (
-            <div className="w-full flex justify-end px-2 lg:px-14">
-              <details className="dropdown">
-                <summary className="btn  btn-primary m-1 flex">
-                  <AdjustmentsHorizontalIcon className="w-4 h-4" />
-                  Filters
-                  {filteredTasks !== undefined && (
-                    <span className="bg-secondary rounded-full m-0 p-2 w-6 h-6 flex items-center justify-center text-xs leading-none">
-                      1
-                    </span>
-                  )}
-                </summary>
-                <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-28 lg:w-36 shadow">
-                  <li
-                    onClick={() => {
-                      setFilteredTasks(undefined);
-                    }}
-                  >
-                    <h5 className="text-sm">Clear Filter</h5>
-                  </li>
-                  <li
-                    onClick={() => {
-                      console.log("adkda");
-                      handleTaskFilter();
-                    }}
-                  >
-                    <h5 className="text-sm">Without Responsible</h5>
-                  </li>
-                </ul>
-              </details>
-            </div>
+          {taskList !== undefined && taskList && taskList.length > 0 && (
+            <FilterTaskButton setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} taskList={taskList} />
           )}
 
-          <div className="w-full flex flex-col justify-center items-center px-1">
+          <div className="w-full flex mt-10 flex-col justify-center items-center px-1">
             {filteredTasks === undefined ? (
               taskList && taskList.length > 0 ? (
                 taskList.map(x => (
