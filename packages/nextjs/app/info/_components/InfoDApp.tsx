@@ -1,10 +1,13 @@
 "use client";
 
-import { UserGroupIcon, ShieldCheckIcon, ArrowPathIcon, ServerIcon, CubeTransparentIcon, WrenchScrewdriverIcon, BookmarkIcon, CurrencyDollarIcon,  CheckBadgeIcon, UserMinusIcon, UserPlusIcon, LinkIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import { UserGroupIcon, ShieldCheckIcon, ArrowPathIcon, ServerIcon, CubeTransparentIcon, WrenchScrewdriverIcon, BookmarkIcon, CurrencyDollarIcon, CheckBadgeIcon, UserMinusIcon, UserPlusIcon, LinkIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 const InfoDApp = () => {
     return (
         <div className="documentation-container max-w-7xl mx-auto px-4 py-12 space-y-12">
+
+
             <section className="intro text-center">
                 <h1 className="text-5xl font-bold text-dark">SMARTHIRE DOCUMENTATION</h1>
             </section>
@@ -46,23 +49,23 @@ const InfoDApp = () => {
                     <div className="feature-card text-center p-6 bg-secondary rounded-lg shadow-lg  transition-transform duration-300 hover:scale-105">
                         <h3 className="text-xl font-bold text-dark py-4">ADMINISTRATOR</h3>
                         <ul className="text-dark mt-2 space-y-4">
-                            <li className="flex items-center space-x-3 ml-3"><UserPlusIcon className="h-5 w-5 text-dark mr-2"/> Create Auditors.</li>
-                            <li className="flex items-center space-x-3 ml-3"><BookmarkIcon className="h-5 w-5 text-dark mr-2"/> Create Tasks and assign responsible.</li>
-                            <li className="flex items-center space-x-3 ml-3"><UserMinusIcon className="h-5 w-5 text-dark mr-2"/> Block or unblock Auditors.</li>
+                            <li className="flex items-center space-x-3 ml-3"><UserPlusIcon className="h-5 w-5 text-dark mr-2" /> Create Auditors.</li>
+                            <li className="flex items-center space-x-3 ml-3"><BookmarkIcon className="h-5 w-5 text-dark mr-2" /> Create Tasks and assign responsible.</li>
+                            <li className="flex items-center space-x-3 ml-3"><UserMinusIcon className="h-5 w-5 text-dark mr-2" /> Block or unblock Auditors.</li>
                         </ul>
                     </div>
                     <div className="feature-card text-center p-6 bg-secondary rounded-lg shadow-lg  transition-transform duration-300 hover:scale-105">
                         <h3 className="text-xl font-bold text-dark py-4">AUDITOR</h3>
                         <ul className="text-dark mt-2 space-y-4">
-                        <li className="flex items-center space-x-3 ml-3"><CheckBadgeIcon className="h-5 w-5 text-dark mr-2"/> Verify that Users complete the assigned tasks.</li>
+                            <li className="flex items-center space-x-3 ml-3"><CheckBadgeIcon className="h-5 w-5 text-dark mr-2" /> Verify that Users complete the assigned tasks.</li>
                         </ul>
                     </div>
                     <div className="feature-card text-center p-6 bg-secondary rounded-lg shadow-lg  transition-transform duration-300 hover:scale-105">
                         <h3 className="text-xl font-bold text-dark py-4">USER</h3>
                         <ul className="text-dark mt-2 space-y-4">
-                            <li className="flex items-center space-x-3 ml-3"><CheckBadgeIcon className="h-5 w-5 text-dark mr-2"/> Accept tasks</li>
-                            <li className="flex items-center space-x-3 ml-3"><CheckBadgeIcon className="h-5 w-5 text-dark mr-2"/> Execute assigned tasks.</li>
-                            <li className="flex items-center space-x-3 ml-3"><CurrencyDollarIcon className="h-5 w-5 text-dark mr-2"/> Receive reward</li>
+                            <li className="flex items-center space-x-3 ml-3"><CheckBadgeIcon className="h-5 w-5 text-dark mr-2" /> Accept tasks</li>
+                            <li className="flex items-center space-x-3 ml-3"><CheckBadgeIcon className="h-5 w-5 text-dark mr-2" /> Execute assigned tasks.</li>
+                            <li className="flex items-center space-x-3 ml-3"><CurrencyDollarIcon className="h-5 w-5 text-dark mr-2" /> Receive reward</li>
                         </ul>
                     </div>
                 </div>
@@ -115,6 +118,51 @@ const InfoDApp = () => {
                     <li className="flex items-center space-x-3"><WrenchScrewdriverIcon className="h-5 w-5 text-dark mr-2" /><span className="font-bold"> Arbitrum Sepolia:</span> A scalable blockchain network compatible with Ethereum, used to deploy SmartHire’s smart contracts, ensuring reduced transaction costs and high efficiency.</li>
                 </ul>
             </section>
+
+
+
+            <section className="model py-8">
+                <h2 className="text-3xl font-semibold text-center text-dark py-4">
+                    BPMN Model and Business
+                </h2>
+                <div className="relative w-full h-[600px]">
+                    <Image
+                        src="/model.png"
+                        alt="Model"
+                        layout="fill"
+                        objectFit="contain"
+                    />
+                </div>
+            </section>
+
+            <section className="sequence py-8">
+                <h2 className="text-3xl font-semibold text-center text-dark py-4">
+                    Sequence Diagram
+                </h2>
+                <div className="relative w-full h-[600px]">
+                    <Image
+                        src="/sequence.png"
+                        alt="sequence"
+                        layout="fill"
+                        objectFit="contain"
+                    />
+                </div>
+            </section>
+
+            <section className="case py-8">
+                <h2 className="text-3xl font-semibold text-center text-dark py-4">
+                    Use Case
+                </h2>
+                <div className="relative w-full h-[600px]">
+                    <Image
+                        src="/case.png"
+                        alt="case"
+                        layout="fill"
+                        objectFit="contain"
+                    />
+                </div>
+            </section>
+
 
             <section className="dev-team py-8">
                 <h2 className="text-3xl font-semibold text-center text-dark">
