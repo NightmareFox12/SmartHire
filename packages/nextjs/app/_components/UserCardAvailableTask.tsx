@@ -1,70 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { ITask } from "../task/_entity/Task.entity";
 import { NextPage } from "next";
 import { formatEther } from "viem";
-import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface UserCardAvailableTaskProps {
   address: string;
   adminAddress: string;
-  taskID: bigint;
-  name: string;
-  description: string;
-  reward: bigint;
   nativeCurrencyPrice: number;
+  taskListData: ITask;
+  setShowInfoTask: Dispatch<SetStateAction<boolean>>;
+  setTaskSelected: Dispatch<SetStateAction<ITask | undefined>>;
 }
 
 const UserCardAvailableTask: NextPage<UserCardAvailableTaskProps> = ({
   address,
   adminAddress,
-  taskID,
-  name,
-  description,
-  reward,
   nativeCurrencyPrice,
+  taskListData,
+  setShowInfoTask,
+  setTaskSelected,
 }) => {
-  const { writeContractAsync: writeTaskContractAsync } = useScaffoldWriteContract("TaskContract");
-
   const [isDollar, setIsDollar] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const handleAcceptTask = async () => {
-    try {
-      setIsLoading(true);
-      await writeTaskContractAsync({
-        functionName: "acceptTask",
-        args: [taskID],
-        account: address,
-      });
-    } catch (e) {
-      console.error("Error setting greeting:", e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="shadow-xl card bg-base-100">
       <div className="card-body">
-        <h2 className="card-title">{name}</h2>
-        <p>{description}</p>
+        <h2 className="card-title">{taskListData.name}</h2>
+        <p>{taskListData.description}</p>
         <p className="m-0">Reward</p>
         <p
-          className="m-0 select-none cursor-pointer transition-all delay-75 ease-in-out"
+          className="m-0 transition-all ease-in-out delay-75 cursor-pointer select-none"
           onClick={() => setIsDollar(!isDollar)}
         >
           {isDollar
-            ? (Number(formatEther(reward)) * nativeCurrencyPrice).toFixed(2) + " $"
-            : Number(formatEther(reward)).toFixed(6) + " ETH"}
+            ? (Number(formatEther(taskListData.reward)) * nativeCurrencyPrice).toFixed(2) + " $"
+            : Number(formatEther(taskListData.reward)).toFixed(6) + " ETH"}
         </p>
-        <div className="card-actions justify-center">
+        <div className="justify-center card-actions">
           <button
             className="btn btn-primary"
-            onClick={() => handleAcceptTask()}
-            disabled={address === adminAddress || isLoading}
+            disabled={address === adminAddress}
+            onClick={() => {
+              setShowInfoTask(true);
+              setTaskSelected(taskListData);
+            }}
           >
-            Accept task
+            Show Details
           </button>
         </div>
       </div>
