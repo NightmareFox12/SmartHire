@@ -2,9 +2,9 @@
 
 import { Dispatch, SetStateAction } from "react";
 import TaskListLoader from "../task/_components/TaskListLoader";
-import { ITask } from "../_entity/Task.entity";
 import { NextPage } from "next";
 import { Address } from "~~/components/scaffold-eth";
+import { ITask } from "../_entity/Task.entity";
 
 interface UserTaskListProps {
   address: string;
@@ -46,7 +46,7 @@ const UserTaskList: NextPage<UserTaskListProps> = ({
               <td className="px-4 py-3 text-sm break-all md:break-normal">
                 <Address address={x.responsible} format="short" />
               </td>
-              <td className="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2">
+              <td className="flex flex-col justify-center items-center gap-1 md:flex-row md:gap-2">
                 <button
                   className={`btn text-xs leading-none ${y % 2 === 0 ? "btn-primary" : "btn-secondary"}`}
                   onClick={() => {
@@ -72,7 +72,7 @@ const UserTaskList: NextPage<UserTaskListProps> = ({
       </table>
     </section>
   ) : (
-    address !== undefined && <h3 className="mt-10 text-xl font-semibold text-center ">No tasks yet</h3>
+    address !== undefined && <h3 className="text-center text-xl mt-10 font-semibold ">No tasks yet</h3>
   );
 };
 

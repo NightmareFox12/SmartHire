@@ -35,7 +35,7 @@ const config: HardhatUserConfig = {
       },
     ],
   },
-  defaultNetwork: "hardhat",
+  defaultNetwork: "localhost",
   // defaultNetwork: "arbitrumSepolia",
   namedAccounts: {
     deployer: {
