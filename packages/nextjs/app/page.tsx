@@ -5,7 +5,7 @@ import ModalInfoTask from "./_components/ModalInfoTask";
 import ModalTaskProof from "./_components/ModalTaskProof";
 import UserCardAvailableTask from "./_components/UserCardAvailableTask";
 import UserTaskList from "./_components/UserTaskList";
-import { ITask } from "./task/_entity/Task.entity";
+import { ITask } from "./_entity/Task.entity";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import ModalMetamask from "~~/components/ModalMetamask";

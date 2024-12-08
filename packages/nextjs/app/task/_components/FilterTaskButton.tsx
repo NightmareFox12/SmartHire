@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { ITask } from "../_entity/Task.entity";
+import { ITask } from "../../_entity/Task.entity";
 import { NextPage } from "next";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 

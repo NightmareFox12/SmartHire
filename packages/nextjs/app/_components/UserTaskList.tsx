@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction } from "react";
 import TaskListLoader from "../task/_components/TaskListLoader";
-import { ITask } from "../task/_entity/Task.entity";
+import { ITask } from "../_entity/Task.entity";
 import { NextPage } from "next";
 import { Address } from "~~/components/scaffold-eth";
 

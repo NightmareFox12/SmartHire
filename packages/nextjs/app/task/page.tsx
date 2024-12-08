@@ -5,7 +5,7 @@ import ModalAdminOrAuditor from "../../components/ModalAdminOrAuditor";
 import CardTaskCollapse from "./_components/CardTaskCollapse";
 import FilterTaskButton from "./_components/FilterTaskButton";
 import TaskListLoader from "./_components/TaskListLoader";
-import { ITask } from "./_entity/Task.entity";
+import { ITask } from "../_entity/Task.entity";
 import { NextPage } from "next";
 import { useAccount } from "wagmi";
 import ModalMetamask from "~~/components/ModalMetamask";
