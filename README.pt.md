@@ -110,7 +110,7 @@ Saídas:
 
 ![Model](https://i.ibb.co/g3zVKRZ/model.png)
 
-## Diagrama de Sequência
+## Diagrama de Sequência - Admin
 
 <p align="center">
   <img src="https://i.ibb.co/N1dqRXs/sequence.png" alt="Sequence"/>

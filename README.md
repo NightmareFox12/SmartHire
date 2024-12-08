@@ -113,7 +113,7 @@ Outputs:
 
 ![Model](https://i.ibb.co/g3zVKRZ/model.png)
 
-## Sequence Diagram
+## Sequence Diagram - Admin
 
 <p align="center">
   <img src="https://i.ibb.co/N1dqRXs/sequence.png" alt="Sequence"/>
