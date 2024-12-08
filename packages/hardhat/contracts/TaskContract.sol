@@ -190,10 +190,26 @@ contract TaskContract is AccessControl {
         emit TaskAdded(taskID, _name);
     }
 
+    /**
+     * Retrieves the name and description of a task by its ID.
+     * Accesses the task from the tasks mapping using the provided task ID.
+     * Returns the task's name and description.
+     * @param _taskID - The ID of the task to retrieve.
+     * @return (string memory, string memory) - The name and description of the task.
+     */
+
     function getTask(uint256 _taskID) public view returns (string memory, string memory) {
         Task storage task = tasks[_taskID];
         return (task.name, task.description);
     }
+
+    /**
+     * Retrieves a list of all tasks.
+     * Ensures the caller has either the default admin role or the auditor role.
+     * Creates a new array with the length equal to the number of tasks.
+     * Iterates over the tasks mapping to populate the array with task details.
+     * @return Task[] memory - An array containing all tasks.
+     */
 
     function getAllTasks() public view returns (Task[] memory) {
         require(
@@ -207,6 +223,15 @@ contract TaskContract is AccessControl {
         }
         return taskList;
     }
+
+    /**
+     * Retrieves all tasks assigned to the caller.
+     * Ensures the caller has the USER_ROLE and the sender address is not the zero address.
+     * Counts the number of tasks assigned to the caller.
+     * Creates an array to store these tasks.
+     * Iterates over the tasks mapping to populate the array with tasks assigned to the caller.
+     * @return Task[] memory - An array containing tasks assigned to the caller.
+     */
 
     function getTasksByResponsible() public view onlyRole(USER_ROLE) returns (Task[] memory) {
         require(msg.sender != address(0), "Sender address is required");
@@ -224,6 +249,15 @@ contract TaskContract is AccessControl {
         }
         return result;
     }
+
+    /**
+     * Retrieves a list of tasks that do not have an assigned responsible address.
+     * Iterates through the tasks mapping to count the number of tasks without a responsible address.
+     * Creates an array to store these tasks.
+     * Populates the array with tasks that have no responsible address.
+     * Returns the array of tasks without a responsible address.
+     * @return Task[] memory - An array containing tasks without a responsible address.
+     */
 
     function getTasksWithoutResponsible() public view returns (Task[] memory) {
         uint256 count = 0;
@@ -245,6 +279,14 @@ contract TaskContract is AccessControl {
         return tasksWithoutResponsible;
     }
 
+    /**
+     * Retrieves a completed task by its task ID.
+     * Iterates through the tasksCompleted mapping to find the task with the matching task ID.
+     * Returns the completed task if found, otherwise returns a default TaskCompleted object.
+     * @param _taskID - The ID of the task to retrieve.
+     * @return TaskCompleted memory - The completed task corresponding to the given task ID.
+     */
+
     function getCompletedTask(uint256 _taskID) public view returns (TaskCompleted memory) {
         for (uint256 i = 0; i < taskCompletedID; i++) {
             if (tasksCompleted[i].taskID == _taskID) {
@@ -253,6 +295,14 @@ contract TaskContract is AccessControl {
         }
         return TaskCompleted(taskCompletedID, 0, "", address(0), false);
     }
+
+    /**
+     * Allows a user to accept a task by assigning themselves as the responsible party.
+     * Ensures that the sender is not the admin, the task exists, the task has no assigned responsible, and the sender is not an auditor.
+     * If the sender is not already a user, assigns the user role to the sender and adds them to the users list.
+     * Updates the task to mark the sender as the responsible party.
+     * @param _taskID - The ID of the task to be accepted.
+     */
 
     function acceptTask(uint256 _taskID) public {
         require(msg.sender != admin, "Address is admin");
@@ -268,6 +318,14 @@ contract TaskContract is AccessControl {
         }
         tasks[_taskID].responsible = payable(msg.sender);
     }
+
+    /**
+     * Marks a task as completed by providing proof.
+     * Ensures the caller has the USER_ROLE and validates that the task exists and the proof is not empty.
+     * Checks if the task has already been completed; if not, it records the completion.
+     * @param _taskID - The ID of the task to mark as completed.
+     * @param _proof - The proof of task completion.
+     */
 
     function completedTask(uint256 _taskID, string memory _proof) public onlyRole(USER_ROLE) {
         require(bytes(tasks[_taskID].name).length > 0, "The task does not exist");
