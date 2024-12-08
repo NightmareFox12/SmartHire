@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ITask } from "../_entity/Task.entity";
 import ModalVerifyTask from "./ModalVerifyTask";
 import { NextPage } from "next";
 import { formatEther } from "viem";
@@ -9,6 +8,7 @@ import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/outl
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
+import { ITask } from "~~/app/_entity/Task.entity";
 
 interface CollapsibleCardProps {
   taskListData: ITask;

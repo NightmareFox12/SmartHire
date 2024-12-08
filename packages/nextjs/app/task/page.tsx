@@ -5,11 +5,11 @@ import ModalAdminOrAuditor from "../../components/ModalAdminOrAuditor";
 import CardTaskCollapse from "./_components/CardTaskCollapse";
 import FilterTaskButton from "./_components/FilterTaskButton";
 import TaskListLoader from "./_components/TaskListLoader";
-import { ITask } from "../_entity/Task.entity";
 import { NextPage } from "next";
 import { useAccount } from "wagmi";
 import ModalMetamask from "~~/components/ModalMetamask";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import { ITask } from "../_entity/Task.entity";
 
 const Task: NextPage = () => {
   const { address } = useAccount();
@@ -42,11 +42,7 @@ const Task: NextPage = () => {
                 taskList.map(x => (
                   <CardTaskCollapse
                     key={x.taskID}
-                    taskID={x.taskID}
-                    name={x.name}
-                    description={x.description}
-                    responsible={x.responsible}
-                    reward={x.reward}
+                    taskListData={x}
                   />
                 ))
               ) : (
@@ -57,11 +53,7 @@ const Task: NextPage = () => {
               filteredTasks.map(x => (
                 <CardTaskCollapse
                   key={x.taskID}
-                  taskID={x.taskID}
-                  name={x.name}
-                  description={x.description}
-                  responsible={x.responsible}
-                  reward={x.reward}
+                  taskListData={x}
                 />
               ))
             )}
