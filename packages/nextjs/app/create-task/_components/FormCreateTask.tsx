@@ -16,6 +16,7 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
   // states
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [rules, setRules] = useState<string>("");
   const [responsibleAddress, setResponsibleAddress] = useState<string>("");
   const [ethReward, setEthReward] = useState("");
 
@@ -48,6 +49,7 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
     setName("");
     setDescription("");
     setResponsibleAddress("");
+    setRules("");
     setEthReward("");
   };
 
@@ -57,13 +59,13 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
       if (responsibleAddress === "") {
         await writeTaskContractAsync({
           functionName: "createTask",
-          args: [name, description],
+          args: [name, description, rules],
           value: parseEther(ethReward),
         });
       } else {
         await writeTaskContractAsync({
           functionName: "createTaskWithResponsible",
-          args: [name, description, responsibleAddress],
+          args: [name, description, rules, responsibleAddress],
           value: parseEther(ethReward),
         });
       }
@@ -90,6 +92,9 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
               Task Name <span className="font-bold text-error text-sm">*</span>
             </label>
             <InputBase name="task-name" value={name} placeholder="Task Name" onChange={setName} />
+            {name !== "" && name.length < 5 && (
+              <span className="ps-2 text-error font-bold text-sm">The name must be at least 5 characters long.</span>
+            )}
           </div>
 
           <div className="flex flex-col">
@@ -100,9 +105,30 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
               name="task-description"
               value={description}
               onChange={e => setDescription(e.target.value)}
-              className="textarea border-base-300 border-2 bg-base-200 focus:outline-none focus:border-base-300 placeholder:text-base-content/80 placeholder:text-[16px] text-base-content font-semibold"
+              className="textarea border-base-300 border-2 bg-base-200 focus:outline-none focus:border-base-300 rounded-lg placeholder:text-base-content/80 placeholder:text-[16px] text-base-content font-semibold"
               placeholder="Description"
             ></textarea>
+            {description !== "" && description.length < 12 && (
+              <span className="ps-2 text-error font-bold text-sm">
+                The description must be at least 12 characters long.
+              </span>
+            )}
+          </div>
+
+          <div className="flex flex-col">
+            <label className="font-bold ps-2" htmlFor="task-rules">
+              Task Rules <span className="font-bold text-error text-sm">*</span>
+            </label>
+            <textarea
+              name="task-rules"
+              value={rules}
+              onChange={e => setRules(e.target.value)}
+              className="textarea border-base-300 border-2 bg-base-200 focus:outline-none focus:border-base-300 rounded-lg placeholder:text-base-content/80 placeholder:text-[16px] text-base-content font-semibold"
+              placeholder="Rules"
+            ></textarea>
+            {rules !== "" && rules.length < 5 && (
+              <span className="ps-2 text-error font-bold text-sm">The rules must be at least 5 characters long.</span>
+            )}
           </div>
         </div>
 
@@ -120,22 +146,22 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
 
             {adminAddress === responsibleAddress ? (
               <span className="ps-2 text-error font-bold text-sm">The address is admin</span>
+            ) : isAuditor ? (
+              <span className="ps-2 text-error font-bold text-sm">The address is auditor</span>
             ) : (
-              <>
-                {isAuditor && <span className="ps-2 text-error font-bold text-sm">The address is auditor</span>}
-                {responsibleAddress.length > 6 && !isUser && (
-                  <>
-                    <span className="ps-2 text-error font-bold text-sm">The address is not user </span>
+              responsibleAddress.length > 6 &&
+              !isUser && (
+                <>
+                  <span className="ps-2 text-error font-bold text-sm">The address is not user </span>
 
-                    <Link
-                      href={`/add-user?address=${responsibleAddress}`}
-                      className="text-base-primary decoration-solid visited:text-secondary decoration-2 underline underline-offset-1"
-                    >
-                      Add user
-                    </Link>
-                  </>
-                )}
-              </>
+                  <Link
+                    href={`/add-user?address=${responsibleAddress}`}
+                    className="text-base-primary decoration-solid visited:text-secondary decoration-2 underline underline-offset-1"
+                  >
+                    Add user
+                  </Link>
+                </>
+              )
             )}
           </div>
 
@@ -148,7 +174,6 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
             {balance && balance.value < parseEther(ethReward) && (
               <span className="ps-2 text-error font-bold text-sm">Insufficient balance</span>
             )}
-            {isAuditor && <span className="ps-2 text-error font-bold text-sm">The address is auditor</span>}
           </div>
         </div>
 
@@ -159,9 +184,11 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
             disabled={
               submitLoader ||
               name.length <= 3 ||
-              description.length <= 5 ||
+              description.length <= 10 ||
+              rules.length <= 5 ||
               ethReward === "" ||
               responsibleAddress === adminAddress ||
+              (responsibleAddress !== "" && !isUser) ||
               isAuditor ||
               balance?.value === 0n ||
               (balance && balance.value < parseEther(ethReward))

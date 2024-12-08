@@ -5,6 +5,7 @@ import { NextPage } from "next";
 import { formatEther } from "viem";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useWatchBalance } from "~~/hooks/scaffold-eth";
+import { ITask } from "~~/app/_entity/Task.entity";
 
 interface ModalInfoTaskProps {
   address: string;
