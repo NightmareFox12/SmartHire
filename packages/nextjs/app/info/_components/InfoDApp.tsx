@@ -193,8 +193,8 @@ const InfoDApp = () => {
                         <h3 className="text-xl font-bold text-dark py-4">Developer</h3>
                         <ul className="text-dark mt-2 space-y-4">
                             <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Name:</span> Miguel Mejías</li>
-                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Username:</span> </li>
-                            <li className="flex items-center"><LinkIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">GitHub:</span> <a href="" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
+                            <li className="flex items-center"><UserCircleIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">Username:</span>miguelmejias0512</li>
+                            <li className="flex items-center"><LinkIcon className="h-5 w-5 text-dark mr-2" /><span className="me-2 font-bold">GitHub:</span> <a href="https://github.com/miguelmejias0512" target="_blank" className="text-blue-600 hover:underline">GitHub Profile</a></li>
                             <li><span>Role in Project:</span> Programmer, focusing on the development of secondary features and optimizations.</li>
                         </ul>
                     </div>
