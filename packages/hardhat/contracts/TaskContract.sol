@@ -31,6 +31,7 @@ contract TaskContract is AccessControl {
     }
 
     struct TaskCompleted {
+        uint256 taskCompletedID;
         uint256 taskID;
         string proof;
         address verifier;
@@ -151,7 +152,7 @@ contract TaskContract is AccessControl {
         return taskList;
     }
 
-    function getTasksByResponsible() public view returns (Task[] memory) {
+    function getTasksByResponsible() public view onlyRole(USER_ROLE) returns (Task[] memory) {
         require(msg.sender != address(0), "Sender address is required");
         uint256 count = 0;
         for (uint256 i = 0; i < taskID; i++) if (tasks[i].responsible == msg.sender) count++;
@@ -188,6 +189,15 @@ contract TaskContract is AccessControl {
         return tasksWithoutResponsible;
     }
 
+    function getCompletedTask(uint256 _taskID) public view returns (TaskCompleted memory) {
+        for (uint256 i = 0; i < taskCompletedID; i++) {
+            if (tasksCompleted[i].taskID == _taskID) {
+                return tasksCompleted[i];
+            }
+        }
+        return TaskCompleted(taskCompletedID, 0, "", address(0), false);
+    }
+
     function acceptTask(uint256 _taskID) public {
         require(msg.sender != admin, "Address is admin");
         require(bytes(tasks[_taskID].name).length > 0, "The task does not exist");
@@ -216,7 +226,7 @@ contract TaskContract is AccessControl {
             }
         }
         if (!alreadyCompleted) {
-            tasksCompleted[taskCompletedID] = TaskCompleted(_taskID, _proof, address(0), false);
+            tasksCompleted[taskCompletedID] = TaskCompleted(taskCompletedID, _taskID, _proof, address(0), false);
             taskCompletedID++;
         }
     }
@@ -227,11 +237,13 @@ contract TaskContract is AccessControl {
             "Caller is not an admin or auditor"
         );
 
+        string memory _proof = tasksCompleted[_taskCompletedID].proof;
+        require(bytes(_proof).length > 0, "Proof cannot be empty");
+
         uint256 _taskID = tasksCompleted[_taskCompletedID].taskID;
 
         require(bytes(tasks[_taskID].name).length > 0, "The task does not exist");
         require(tasks[_taskID].responsible != payable(address(0)), "No responsible assigned");
-
         if (_verified) {
             tasksCompleted[_taskCompletedID].verifier = msg.sender;
             tasksCompleted[_taskCompletedID].verified = _verified;
