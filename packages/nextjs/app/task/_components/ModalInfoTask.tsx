@@ -1,7 +1,6 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { ITask } from "../task/_entity/Task.entity";
 import { NextPage } from "next";
 import { formatEther } from "viem";
 import { XMarkIcon } from "@heroicons/react/24/outline";
