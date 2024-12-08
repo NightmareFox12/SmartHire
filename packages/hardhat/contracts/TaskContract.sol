@@ -345,6 +345,16 @@ contract TaskContract is AccessControl {
         }
     }
 
+    /**
+     * Verifies a completed task.
+     * Checks if the sender has either the default admin role or the auditor role.
+     * Ensures the proof is provided and the task exists.
+     * If verified, assigns the verifier and transfers the reward to the responsible.
+     * If not verified, releases the task for reassignment.
+     * @param _taskCompletedID - The ID of the completed task to verify.
+     * @param _verified - Boolean indicating whether the task is verified.
+     */
+
     function verifiedTask(uint256 _taskCompletedID, bool _verified) public {
         // Check if the sender has either the default admin role or the auditor role using the AccessControl library
         require(
@@ -379,6 +389,14 @@ contract TaskContract is AccessControl {
         }
     }
 
+    /**
+     * Adds a new auditor to the system.
+     * Ensures the provided auditor address is valid and not already assigned as an admin, auditor, or user.
+     * Creates a new Auditor object and assigns the AUDITOR_ROLE to the given address.
+     * Increments the auditorID and emits an event to signal that a new auditor has been added.
+     * @param _auditorAddress - The address of the auditor to be added.
+     */
+
     function addAuditor(address _auditorAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(_auditorAddress != address(0), "Auditor address cannot be zero address");
         require(admin != _auditorAddress, "Admin cannot be auditor");
@@ -392,6 +410,14 @@ contract TaskContract is AccessControl {
         emit AuditorAdded(_auditorAddress);
     }
 
+    /**
+     * Retrieves a list of all auditors.
+     * Creates a new array with the length equal to the number of auditors (auditorID).
+     * Iterates over the auditors mapping to populate the array with auditor details.
+     * Returns the array of auditors.
+     * @return Auditor[] memory - An array containing all auditors.
+     */
+
     function getAllAuditors() public view returns (Auditor[] memory) {
         Auditor[] memory auditorList = new Auditor[](auditorID);
         for (uint256 i = 0; i < auditorID; i++) {
@@ -401,6 +427,14 @@ contract TaskContract is AccessControl {
         return auditorList;
     }
 
+    /**
+     * Checks if a given address is associated with an auditor.
+     * Iterates through the auditors mapping to see if the address matches any existing auditor addresses.
+     * Returns true if a match is found; otherwise, returns false.
+     * @param _auditorAddress - The address to be checked.
+     * @return bool - True if the address is an auditor, false otherwise.
+     */
+
     function getAuditorForAddress(address _auditorAddress) public view returns (bool) {
         for (uint256 i = 0; i <= auditorID; i++) {
             if (auditors[i].auditorAddress == _auditorAddress) return true;
@@ -408,11 +442,25 @@ contract TaskContract is AccessControl {
         return false;
     }
 
+    /**
+     * Blocks an auditor by setting their block status to true and revoking their auditor role.
+     * Ensures the auditor exists by checking if their address is not the zero address.
+     * Updates the auditor's block status and revokes their AUDITOR_ROLE.
+     * @param _auditorID - The ID of the auditor to be blocked.
+     */
+
     function blockAuditor(uint256 _auditorID) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(auditors[_auditorID].auditorAddress != address(0), "Auditor does not exist");
         auditors[_auditorID].block = true;
         _revokeRole(AUDITOR_ROLE, auditors[_auditorID].auditorAddress);
     }
+
+    /**
+     * Unlocks an auditor by setting their block status to false and re-granting their auditor role.
+     * Ensures the auditor exists by checking if their address is not the zero address.
+     * Updates the auditor's block status and grants them the AUDITOR_ROLE again.
+     * @param _auditorID - The ID of the auditor to be unlocked.
+     */
 
     function unlockAuditor(uint256 _auditorID) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(auditors[_auditorID].auditorAddress != address(0), "Auditor does not exist");
