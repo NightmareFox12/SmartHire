@@ -114,7 +114,6 @@ contract TaskContract is AccessControl {
      * @param _addressUser - The address to be checked.
      * @return bool - True if the address is a user, false otherwise.
      */
-
     function getUserForAddress(address _addressUser) public view returns (bool) {
         require(_addressUser != address(0), "User address cannot be zero address");
 
@@ -134,7 +133,6 @@ contract TaskContract is AccessControl {
      * @param _description - A brief description of the task.
      * @param _rules - The rules and guidelines for the task.
      */
-
     function createTask(
         string memory _name,
         string memory _description,
@@ -162,7 +160,6 @@ contract TaskContract is AccessControl {
      * @param _rules - The rules and guidelines for the task.
      * @param _responsible - The address responsible for the task.
      */
-
     function createTaskWithResponsible(
         string memory _name,
         string memory _description,
@@ -197,7 +194,6 @@ contract TaskContract is AccessControl {
      * @param _taskID - The ID of the task to retrieve.
      * @return (string memory, string memory) - The name and description of the task.
      */
-
     function getTask(uint256 _taskID) public view returns (string memory, string memory) {
         Task storage task = tasks[_taskID];
         return (task.name, task.description);
@@ -210,7 +206,6 @@ contract TaskContract is AccessControl {
      * Iterates over the tasks mapping to populate the array with task details.
      * @return Task[] memory - An array containing all tasks.
      */
-
     function getAllTasks() public view returns (Task[] memory) {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(AUDITOR_ROLE, msg.sender),
@@ -232,7 +227,6 @@ contract TaskContract is AccessControl {
      * Iterates over the tasks mapping to populate the array with tasks assigned to the caller.
      * @return Task[] memory - An array containing tasks assigned to the caller.
      */
-
     function getTasksByResponsible() public view onlyRole(USER_ROLE) returns (Task[] memory) {
         require(msg.sender != address(0), "Sender address is required");
         uint256 count = 0;
@@ -258,7 +252,6 @@ contract TaskContract is AccessControl {
      * Returns the array of tasks without a responsible address.
      * @return Task[] memory - An array containing tasks without a responsible address.
      */
-
     function getTasksWithoutResponsible() public view returns (Task[] memory) {
         uint256 count = 0;
         uint256 index = 0;
@@ -286,7 +279,6 @@ contract TaskContract is AccessControl {
      * @param _taskID - The ID of the task to retrieve.
      * @return TaskCompleted memory - The completed task corresponding to the given task ID.
      */
-
     function getCompletedTask(uint256 _taskID) public view returns (TaskCompleted memory) {
         for (uint256 i = 0; i < taskCompletedID; i++) {
             if (tasksCompleted[i].taskID == _taskID) {
@@ -303,7 +295,6 @@ contract TaskContract is AccessControl {
      * Updates the task to mark the sender as the responsible party.
      * @param _taskID - The ID of the task to be accepted.
      */
-
     function acceptTask(uint256 _taskID) public {
         require(msg.sender != admin, "Address is admin");
         require(bytes(tasks[_taskID].name).length > 0, "The task does not exist");
@@ -326,7 +317,6 @@ contract TaskContract is AccessControl {
      * @param _taskID - The ID of the task to mark as completed.
      * @param _proof - The proof of task completion.
      */
-
     function completedTask(uint256 _taskID, string memory _proof) public onlyRole(USER_ROLE) {
         require(bytes(tasks[_taskID].name).length > 0, "The task does not exist");
         require(bytes(_proof).length > 0, "Proof cannot be empty");
@@ -354,7 +344,6 @@ contract TaskContract is AccessControl {
      * @param _taskCompletedID - The ID of the completed task to verify.
      * @param _verified - Boolean indicating whether the task is verified.
      */
-
     function verifiedTask(uint256 _taskCompletedID, bool _verified) public {
         // Check if the sender has either the default admin role or the auditor role using the AccessControl library
         require(
@@ -396,7 +385,6 @@ contract TaskContract is AccessControl {
      * Increments the auditorID and emits an event to signal that a new auditor has been added.
      * @param _auditorAddress - The address of the auditor to be added.
      */
-
     function addAuditor(address _auditorAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(_auditorAddress != address(0), "Auditor address cannot be zero address");
         require(admin != _auditorAddress, "Admin cannot be auditor");
@@ -417,7 +405,6 @@ contract TaskContract is AccessControl {
      * Returns the array of auditors.
      * @return Auditor[] memory - An array containing all auditors.
      */
-
     function getAllAuditors() public view returns (Auditor[] memory) {
         Auditor[] memory auditorList = new Auditor[](auditorID);
         for (uint256 i = 0; i < auditorID; i++) {
@@ -434,7 +421,6 @@ contract TaskContract is AccessControl {
      * @param _auditorAddress - The address to be checked.
      * @return bool - True if the address is an auditor, false otherwise.
      */
-
     function getAuditorForAddress(address _auditorAddress) public view returns (bool) {
         for (uint256 i = 0; i <= auditorID; i++) {
             if (auditors[i].auditorAddress == _auditorAddress) return true;
@@ -448,7 +434,6 @@ contract TaskContract is AccessControl {
      * Updates the auditor's block status and revokes their AUDITOR_ROLE.
      * @param _auditorID - The ID of the auditor to be blocked.
      */
-
     function blockAuditor(uint256 _auditorID) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(auditors[_auditorID].auditorAddress != address(0), "Auditor does not exist");
         auditors[_auditorID].block = true;
@@ -461,7 +446,6 @@ contract TaskContract is AccessControl {
      * Updates the auditor's block status and grants them the AUDITOR_ROLE again.
      * @param _auditorID - The ID of the auditor to be unlocked.
      */
-
     function unlockAuditor(uint256 _auditorID) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(auditors[_auditorID].auditorAddress != address(0), "Auditor does not exist");
         auditors[_auditorID].block = false;
