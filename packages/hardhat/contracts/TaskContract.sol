@@ -4,7 +4,7 @@ pragma solidity >=0.8.0;
 import "@openzeppelin/contracts/access/AccessControl.sol"; //Contract AccessControl by OpenZeppelin
 
 contract TaskContract is AccessControl {
-    //roles
+    //Roles for AccessControl
     bytes32 public constant AUDITOR_ROLE = keccak256("AUDITOR_ROLE");
     bytes32 public constant USER_ROLE = keccak256("USER_ROLE");
 
@@ -52,13 +52,23 @@ contract TaskContract is AccessControl {
     //constructor
     constructor(address _admin) {
         admin = _admin;
-        _grantRole(DEFAULT_ADMIN_ROLE, _admin);
+        _grantRole(DEFAULT_ADMIN_ROLE, _admin); // Grant the default admin role to the user specified by the AccessControl
     }
 
-    //functions
+    //Functions
+
+    /**
+     * Adds a new user to the system.
+     * Checks various conditions including whether the address is valid,
+     * if the sender has the required role, and if the address is not already assigned.
+     * If all conditions are met, grants the user role to the address and emits an event.
+     * @param _addressUser - Address of the user to be added.
+     */
+
     function addUser(address _addressUser) public {
         require(_addressUser != address(0), "User address cannot be zero address");
         require(admin != _addressUser, "Admin cannot be user");
+        // Check if the sender has either the default admin role or the auditor role using the AccessControl library
         require(
             hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(AUDITOR_ROLE, msg.sender),
             "Caller is not an admin or auditor"
@@ -73,6 +83,21 @@ contract TaskContract is AccessControl {
         emit UserAdded(_addressUser);
     }
 
+    /**
+     * Returns an array containing all user addresses.
+     * Creates a new array with the size equal to the current number of users (userID).
+     * Iterates through the users mapping to populate the array with user addresses.
+     * @return address[] memory - An array of user addresses.
+     */
+
+    /**
+     * Retrieves a list of all user addresses.
+     * Creates a new array with the length equal to the current number of users (userID).
+     * Iterates over the users mapping to populate the array with user addresses.
+     * Returns the array of user addresses.
+     * @return address[] memory - An array containing all user addresses.
+     */
+
     function getAllUsers() public view returns (address[] memory) {
         address[] memory userList = new address[](userID);
         for (uint256 i = 0; i < userID; i++) {
@@ -80,6 +105,15 @@ contract TaskContract is AccessControl {
         }
         return userList;
     }
+
+    /**
+     * Checks if a given address is associated with any user.
+     * Validates that the provided address is not the zero address.
+     * Iterates through the user mapping to see if the address matches any existing user addresses.
+     * Returns true if a match is found; otherwise, returns false.
+     * @param _addressUser - The address to be checked.
+     * @return bool - True if the address is a user, false otherwise.
+     */
 
     function getUserForAddress(address _addressUser) public view returns (bool) {
         require(_addressUser != address(0), "User address cannot be zero address");
@@ -90,6 +124,16 @@ contract TaskContract is AccessControl {
 
         return false;
     }
+
+    /**
+     * Creates a new task with the given name, description, and rules.
+     * Ensures the provided name, description, and rules are not empty and that a reward is provided.
+     * Stores the task in the tasks mapping with a unique taskID and initializes task properties.
+     * Emits a TaskAdded event to signal that a new task has been created.
+     * @param _name - The name of the task.
+     * @param _description - A brief description of the task.
+     * @param _rules - The rules and guidelines for the task.
+     */
 
     function createTask(
         string memory _name,
@@ -106,6 +150,18 @@ contract TaskContract is AccessControl {
         taskID++;
         emit TaskAdded(taskID, _name);
     }
+
+    /**
+     * Creates a new task with the specified name, description, rules, and responsible address.
+     * Ensures the provided name, description, and rules are not empty.
+     * Validates that a reward is provided and that the responsible address is not an admin or auditor.
+     * Assigns the task to the responsible address, granting the user role if not already assigned.
+     * Emits events to signal the addition of the user (if new) and the task.
+     * @param _name - The name of the task.
+     * @param _description - A brief description of the task.
+     * @param _rules - The rules and guidelines for the task.
+     * @param _responsible - The address responsible for the task.
+     */
 
     function createTaskWithResponsible(
         string memory _name,
@@ -232,6 +288,7 @@ contract TaskContract is AccessControl {
     }
 
     function verifiedTask(uint256 _taskCompletedID, bool _verified) public {
+        // Check if the sender has either the default admin role or the auditor role using the AccessControl library
         require(
             hasRole(DEFAULT_ADMIN_ROLE, msg.sender) || hasRole(AUDITOR_ROLE, msg.sender),
             "Caller is not an admin or auditor"
