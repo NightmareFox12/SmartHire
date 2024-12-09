@@ -27,7 +27,7 @@ const Home: NextPage = () => {
   //smart contract
   const { address: address } = useAccount();
 
-  const { data: taskListWithoutResponsible, isLoading: isLoadingTaskWithoutResponsible } = useScaffoldReadContract({
+  const { data: taskListWithoutResponsible } = useScaffoldReadContract({
     contractName: "TaskContract",
     functionName: "getTasksWithoutResponsible",
     account: address,
