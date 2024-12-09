@@ -4,8 +4,8 @@ import { Dispatch, SetStateAction } from "react";
 import { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { ItaskCompleted } from "~~/app/_entity/Task.entity";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface ModalVerifyTaskProps {
   taskID: bigint;
@@ -32,6 +32,18 @@ const ModalVerifyTask: NextPage<ModalVerifyTaskProps> = ({ taskID, taskCompleted
     }
   };
 
+  const handleRejectTask = async () => {
+    try {
+      await writeTaskContractAsync({
+        functionName: "verifiedTask",
+        args: [taskID, false],
+        account: address,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <dialog className="modal modal-open">
       <div className="modal-box">
@@ -44,9 +56,9 @@ const ModalVerifyTask: NextPage<ModalVerifyTaskProps> = ({ taskID, taskCompleted
 
         <h4 className="text-xl font-bold text-center">Proof the task</h4>
 
-          <a className="text-center block" href={taskCompleted.proof}>
-            {taskCompleted.proof}
-          </a>
+        <a className="text-center block" href={taskCompleted.proof}>
+          {taskCompleted.proof}
+        </a>
 
         <div className="modal-action justify-center">
           {taskCompleted.verified ? (
@@ -54,9 +66,14 @@ const ModalVerifyTask: NextPage<ModalVerifyTaskProps> = ({ taskID, taskCompleted
               Close Details
             </button>
           ) : (
-            <button className="btn btn-primary" onClick={() => handleVerifyTask()}>
-              Verify Task
-            </button>
+            <>
+              <button className="btn btn-primary" onClick={() => handleRejectTask()}>
+                reject task
+              </button>
+              <button className="btn btn-primary" onClick={() => handleVerifyTask()}>
+                Verify Task
+              </button>
+            </>
           )}
         </div>
       </div>

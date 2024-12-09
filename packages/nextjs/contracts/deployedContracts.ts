@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     TaskContract: {
-      address: "0x948B3c65b89DF0B4894ABE91E6D02FE579834F8F",
+      address: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
       abi: [
         {
           inputs: [
@@ -512,6 +512,11 @@ const deployedContracts = {
                   name: "verified",
                   type: "bool",
                 },
+                {
+                  internalType: "bool",
+                  name: "release",
+                  type: "bool",
+                },
               ],
               internalType: "struct TaskContract.TaskCompleted",
               name: "",
@@ -906,7 +911,7 @@ const deployedContracts = {
   },
   421614: {
     TaskContract: {
-      address: "0xC7FC653F16ee2562Db025a67Ad8349620D417d7e",
+      address: "0x087c615C73E35805A5Ca7f111C78a3B7Ee992674",
       abi: [
         {
           inputs: [

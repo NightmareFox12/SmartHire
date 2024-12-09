@@ -1,10 +1,10 @@
 "use client";
 
 import { Dispatch, SetStateAction } from "react";
+import { ITask } from "../_entity/Task.entity";
 import TaskListLoader from "../task/_components/TaskListLoader";
 import { NextPage } from "next";
 import { Address } from "~~/components/scaffold-eth";
-import { ITask } from "../_entity/Task.entity";
 
 interface UserTaskListProps {
   address: string;
@@ -47,15 +47,17 @@ const UserTaskList: NextPage<UserTaskListProps> = ({
                 <Address address={x.responsible} format="short" />
               </td>
               <td className="flex flex-col justify-center items-center gap-1 md:flex-row md:gap-2">
-                <button
-                  className={`btn text-xs leading-none ${y % 2 === 0 ? "btn-primary" : "btn-secondary"}`}
-                  onClick={() => {
-                    setTaskID(x.taskID)
-                    setShowProofModal(true);
-                  }}
-                >
-                  complete
-                </button>
+                {!x.completed && (
+                  <button
+                    className={`btn text-xs leading-none ${y % 2 === 0 ? "btn-primary" : "btn-secondary"}`}
+                    onClick={() => {
+                      setTaskID(x.taskID);
+                      setShowProofModal(true);
+                    }}
+                  >
+                    complete
+                  </button>
+                )}
                 <button
                   className={`btn text-xs ${y % 2 === 0 ? "btn-primary" : "btn-secondary"}`}
                   onClick={() => {
