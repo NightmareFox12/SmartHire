@@ -78,7 +78,7 @@ const FormCreateTask: NextPage<FormCreateTaskProps> = ({ address, adminAddress }
   };
 
   return (
-    <div className="flex justify-center items-start min-h-screen p-4 pt-10">
+    <div className="flex justify-center items-start min-h-screen p-4">
       <div className="w-full max-w-3x2 shadow-lg rounded-lg p-6 sm:p-8 md:p-12 lg:p-16">
         {isTaskIDLoading ? (
           <div className="mx-auto skeleton w-20 h-5 my-3" />
