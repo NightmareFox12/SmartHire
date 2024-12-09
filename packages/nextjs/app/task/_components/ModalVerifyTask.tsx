@@ -8,35 +8,22 @@ import { ItaskCompleted } from "~~/app/_entity/Task.entity";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface ModalVerifyTaskProps {
-  taskID: bigint;
   taskCompleted: ItaskCompleted;
   setShowModalEdit: Dispatch<SetStateAction<boolean>>;
 }
 
-const ModalVerifyTask: NextPage<ModalVerifyTaskProps> = ({ taskID, taskCompleted, setShowModalEdit }) => {
+const ModalVerifyTask: NextPage<ModalVerifyTaskProps> = ({ taskCompleted, setShowModalEdit }) => {
   const { address } = useAccount();
 
   //smart contract
   const { writeContractAsync: writeTaskContractAsync } = useScaffoldWriteContract("TaskContract");
 
   //functions
-  const handleVerifyTask = async () => {
+  const handleVerifyTask = async (verified: boolean) => {
     try {
       await writeTaskContractAsync({
         functionName: "verifiedTask",
-        args: [taskID, true],
-        account: address,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleRejectTask = async () => {
-    try {
-      await writeTaskContractAsync({
-        functionName: "verifiedTask",
-        args: [taskID, false],
+        args: [taskCompleted.taskCompletedID, verified],
         account: address,
       });
     } catch (err) {
@@ -67,10 +54,10 @@ const ModalVerifyTask: NextPage<ModalVerifyTaskProps> = ({ taskID, taskCompleted
             </button>
           ) : (
             <>
-              <button className="btn btn-primary" onClick={() => handleRejectTask()}>
+              <button className="btn btn-primary" onClick={() => handleVerifyTask(false)}>
                 reject task
               </button>
-              <button className="btn btn-primary" onClick={() => handleVerifyTask()}>
+              <button className="btn btn-primary" onClick={() => handleVerifyTask(true)}>
                 Verify Task
               </button>
             </>

@@ -9,6 +9,7 @@ export interface ITask {
 }
 
 export interface ItaskCompleted {
+  taskCompletedID: bigint;
   taskID: bigint;
   proof: string;
   verifier: string;

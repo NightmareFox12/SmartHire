@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import ModalInfoTask from "./_components/ModalInfoTask";
 import ModalTaskProof from "./_components/ModalTaskProof";
 import UserCardAvailableTask from "./_components/UserCardAvailableTask";
 import UserTaskList from "./_components/UserTaskList";
@@ -11,6 +10,7 @@ import { useAccount } from "wagmi";
 import ModalMetamask from "~~/components/ModalMetamask";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
+import ModalInfoTask from "~~/components/ModalInfoTask";
 
 const Home: NextPage = () => {
   //states
@@ -105,7 +105,7 @@ const Home: NextPage = () => {
           <h2 className="text-3xl font-semibold mt-8 text-center">Available Tasks</h2>
 
           {taskListWithoutResponsible && taskListWithoutResponsible.length > 0 && (
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:px-4">
               {taskListWithoutResponsible.map((x, y) => (
                 <UserCardAvailableTask
                   key={y}

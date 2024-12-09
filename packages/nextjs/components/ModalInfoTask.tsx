@@ -1,11 +1,11 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { ITask } from "../task/_entity/Task.entity";
 import { NextPage } from "next";
 import { formatEther } from "viem";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useWatchBalance } from "~~/hooks/scaffold-eth";
+import { ITask } from "~~/app/_entity/Task.entity";
 
 interface ModalInfoTaskProps {
   address: string;
@@ -32,10 +32,10 @@ const ModalInfoTask: NextPage<ModalInfoTaskProps> = ({
 
   return (
     <dialog className="modal modal-open">
-      <div className="w-11/12 max-w-5xl modal-box">
+      <div className="modal-box w-11/12 max-w-5xl">
         <div className="flex justify-end">
           <button
-            className="absolute transition-all btn btn-sm btn-circle right-2 top-2 hover:scale-110"
+            className="btn btn-sm btn-circle absolute right-2 top-2 hover:scale-110 transition-all"
             onClick={() => {
               setTaskSelected(undefined);
               setShowInfoTask(false);
@@ -45,12 +45,12 @@ const ModalInfoTask: NextPage<ModalInfoTaskProps> = ({
           </button>
         </div>
 
-        <h2 className="text-lg font-bold text-center">{taskSelected.name}</h2>
+        <h2 className="font-bold text-lg text-center">{taskSelected.name}</h2>
         <p className="py-4 text-center">{taskSelected.description}</p>
 
-        <h5 className="font-bold text-center">Reward</h5>
+        <h5 className="text-center font-bold">Reward</h5>
         <p
-          className="pb-2 m-0 text-center transition-all ease-in-out delay-75 cursor-pointer select-none"
+          className="m-0 text-center pb-2 select-none cursor-pointer transition-all delay-75 ease-in-out"
           onClick={() => setIsDollar(!isDollar)}
         >
           {isDollar
@@ -58,9 +58,9 @@ const ModalInfoTask: NextPage<ModalInfoTaskProps> = ({
             : Number(formatEther(taskSelected.reward)).toFixed(6) + " ETH"}
         </p>
 
-        <h5 className="font-bold text-center">Rules</h5>
-
-        <div className="flex justify-center modal-action">
+        <h5 className="text-center font-bold">Rules</h5>
+        <p className="py-4 text-center">{taskSelected.rules}</p>
+        <div className="modal-action flex justify-center">
           {taskSelected.responsible.includes("0x0000000000") ? (
             <button
               className="btn btn-primary"
@@ -81,9 +81,7 @@ const ModalInfoTask: NextPage<ModalInfoTaskProps> = ({
             </button>
           )}
         </div>
-        {balance?.value === 0n && (
-          <p className="m-0 text-sm font-bold text-center text-error">Insufficient balance</p>
-        )}
+        {balance?.value === 0n && <p className="m-0 text-center text-error font-bold text-sm">Insufficient balance</p>}
       </div>
     </dialog>
   );

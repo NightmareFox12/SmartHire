@@ -33,7 +33,7 @@ const CardTaskCollapse: NextPage<CollapsibleCardProps> = ({ taskListData }) => {
   return (
     <>
       {showModalEdit && taskCompleted !== undefined && (
-        <ModalVerifyTask taskID={taskListData.taskID} taskCompleted={taskCompleted} setShowModalEdit={setShowModalEdit} />
+        <ModalVerifyTask taskCompleted={taskCompleted} setShowModalEdit={setShowModalEdit} />
       )}
 
       <article className="w-full my-5 md:px-5 lg:px-20 select-none overflow-hidden transition-all duration-300 ease-in-out">
@@ -64,9 +64,9 @@ const CardTaskCollapse: NextPage<CollapsibleCardProps> = ({ taskListData }) => {
           )}
         </div>
         <div
-          className={`lg:px-16 transition-all shadow-lg duration-300 ease-in-out ${isExpanded ? "mb-5 max-h-96" : "max-h-0 mb-0"}`}
+          className={`lg:px-16 transition-all shadow-lg duration-300 ease-in-out ${isExpanded ? "mb-5 h-full" : "max-h-0 mb-0"}`}
         >
-          <div className="flex flex-col items-center justify-center m-0 p-5">
+          <div className="flex flex-col items-center justify-center m-0 p-5 h-full">
             <h4 className="text-lg font-semibold m-0">Name</h4>
             <p className="break-words text-center">{taskListData.name}</p>
 

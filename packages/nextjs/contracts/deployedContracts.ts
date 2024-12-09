@@ -911,7 +911,7 @@ const deployedContracts = {
   },
   421614: {
     TaskContract: {
-      address: "0x087c615C73E35805A5Ca7f111C78a3B7Ee992674",
+      address: "0x87Be32d13dc85B517CD6cbD59e715445e068631f",
       abi: [
         {
           inputs: [
@@ -1414,6 +1414,11 @@ const deployedContracts = {
                 {
                   internalType: "bool",
                   name: "verified",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "release",
                   type: "bool",
                 },
               ],

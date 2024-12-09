@@ -26,7 +26,7 @@ const UserTaskList: NextPage<UserTaskListProps> = ({
   setTaskID,
 }) => {
   return isLoadingTaskList ? (
-    <TaskListLoader items={10} />
+    <TaskListLoader items={6} />
   ) : taskListData !== undefined && taskListData.length > 0 ? (
     <section className="flex justify-center mt-8">
       <table className="table w-full lg:w-11/12">
