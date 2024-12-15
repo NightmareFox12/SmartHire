@@ -1,0 +1,39 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/ContractFactory.sol": {
+      "content": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.8.0;\r\n\r\nimport \"./Problem.sol\";\r\n\r\ncontract ContractFactory {\r\n\r\n  function createTaskContract() public returns (address) {\r\n    Problem newProblem = new Problem();\r\n    return address(newProblem);\r\n  }\r\n}\r\n"
+    },
+    "contracts/Problem.sol": {
+      "content": "// SPDX-License-Identifier: MIT \r\npragma solidity >=0.8.0;\r\n\r\ncontract Problem {\r\n  function problemAddress() public view returns(address) {\r\n    return address(this)  ;\r\n  }\r\n}"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

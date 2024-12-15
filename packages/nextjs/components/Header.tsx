@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  ArrowLeftEndOnRectangleIcon,
   Bars3Icon,
   BugAntIcon,
   ClipboardDocumentIcon,
@@ -58,6 +59,11 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Debug Contracts",
     href: "/debug",
     icon: <BugAntIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Close session",
+    href: "/close-session",
+    icon: <ArrowLeftEndOnRectangleIcon className="h-4 w-4 color-danger" />,
   },
 ];
 

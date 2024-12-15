@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ModalMetamask from "./ModalMetamask";
 import ToastEvent from "./ToastEvent";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -8,21 +9,41 @@ import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { useTheme } from "next-themes";
 import { Toaster } from "react-hot-toast";
 import { WagmiProvider } from "wagmi";
+import FormDao from "~~/app/_components/FormDao";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
+import { DAO_ADDRESS_KEY } from "~~/constants/constants";
+import { DataTestProvider, useData } from "~~/context/DataTestProvider";
 import { useInitializeNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   useInitializeNativeCurrencyPrice();
 
+  const { isDaoExist, setIsDaoExist } = useData();
+
+  //get DAO address
+  useEffect(() => {
+    const daoAddress = window.localStorage.getItem(DAO_ADDRESS_KEY);
+    console.log(daoAddress);
+    setIsDaoExist(daoAddress !== null);
+  }, []);
+
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <Header />
-        <ToastEvent />
-        <main className="relative flex flex-col flex-1">{children}</main>
+        <ModalMetamask />
+        {isDaoExist && (
+          <>
+            <Header />
+            <ToastEvent />
+          </>
+        )}
+
+        <main className="relative flex flex-col flex-1">
+          {isDaoExist ? children : <FormDao setIsDaoExist={setIsDaoExist} />}
+        </main>
         <Footer />
       </div>
       <Toaster />
@@ -51,11 +72,14 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <ProgressBar height="3px" color="#2299dd" />
+
         <RainbowKitProvider
           avatar={BlockieAvatar}
           theme={mounted ? (isDarkMode ? darkTheme() : lightTheme()) : lightTheme()}
         >
-          <ScaffoldEthApp>{children}</ScaffoldEthApp>
+          <DataTestProvider>
+            <ScaffoldEthApp>{children}</ScaffoldEthApp>
+          </DataTestProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
