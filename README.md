@@ -2,7 +2,6 @@
 
 ## Languages
 
-- 📚 [English](./README.md)
 - 📚 [Español](./README.es.md)
 - 📚 [Português](./README.pt.md)
 
